@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% block title %}Add Question{% endblock %}
+{% block content %}
+<h2>Add Question</h2>
+<div class="container">
+    <form method="POST" enctype="multipart/form-data">  {# Ensure enctype for file upload #}
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.name.label(for="name") }}
+            {{ form.name(class="form-control", id="name") }}
+            {% if form.name.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.name.errors|join(', ') }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.document.label(for="document") }}
+            {{ form.document(class="form-control-file", id="document") }}
+            {% if form.document.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.document.errors|join(', ') }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.follow_up_document.label(for="follow_up_document") }}
+            {{ form.follow_up_document(class="form-control-file", id="follow_up_document") }}
+            {% if form.follow_up_document.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.follow_up_document.errors|join(', ') }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.date.label(for="date") }}
+            {{ form.date(class="form-control", id="date") }}
+            {% if form.date.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.date.errors|join(', ') }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.status.label(for="status") }}
+            {{ form.status(class="form-control", id="status") }}
+            {% if form.status.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ form.status.errors|join(', ') }}
+                </div>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

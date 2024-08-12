@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block title %} Functions {% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Functions</h1>
+    
+    <!-- Legislation Dropdown -->
+    <div class="dropdown mb-3">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="legislationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Legislation
+        </button>
+        <div class="dropdown-menu" aria-labelledby="legislationDropdown">
+            <a class="dropdown-item" href="{{ url_for('bills.add_bill') }}">Bills</a>
+            <a class="dropdown-item" href="{{ url_for('legislation.motions') }}">Motions</a>
+            <a class="dropdown-item" href="{{ url_for('legislation.statements') }}">Statements</a>
+            <a class="dropdown-item" href="{{ url_for('legislation.questions') }}">Questions</a>
+        </div>
+    </div>
+    
+    <!-- Oversight Dropdown -->
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="oversightDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Oversight
+        </button>
+        <div class="dropdown-menu" aria-labelledby="oversightDropdown">
+            <a class="dropdown-item" href="{{ url_for('oversight.oversight_secondary') }}">Secondary Oversight</a>
+        </div>
+    </div>
+
+    <p>Other functions content...</p>
+</div>
+{% endblock %}

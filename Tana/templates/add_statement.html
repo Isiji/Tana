@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+{% block title %} Add Statement {% endblock %}
+{% block content %}
+    <h2>Add Statement</h2>
+    <div class="container">
+        <a href="{{ url_for('legislation.view_statements') }}" class="btn btn-info mb-3">View Statements</a>
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.name.label(for="name") }}
+                {{ form.name(class="form-control", id="name") }}
+                {% for error in form.name.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.document.label(for="document") }}
+                {{ form.document(class="form-control-file", id="document") }}
+                {% for error in form.document.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.follow_up_letter.label(for="follow_up_letter") }}
+                {{ form.follow_up_letter(class="form-control-file", id="follow_up_letter") }}
+                {% for error in form.follow_up_letter.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.date.label(for="date") }}
+                {{ form.date(class="form-control", id="date", type="date") }}
+                {% for error in form.date.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.status.label(for="status") }}
+                {{ form.status(class="form-control", id="status") }}
+                {% for error in form.status.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

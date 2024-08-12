@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+
+{% block title %}Events List{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Events List</h1>
+
+    <!-- Filters -->
+    <form method="GET" action="{{ url_for('events.view_events') }}" class="form-inline mb-4">
+        <div class="form-group mr-2">
+            <input type="text" name="event_name" class="form-control" placeholder="Event Name" value="{{ request.args.get('event_name', '') }}">
+        </div>
+        <div class="form-group mr-2">
+            <select name="impact_level" class="form-control">
+                <option value="">All Impact Levels</option>
+                <option value="Low" {% if request.args.get('impact_level') == 'Low' %}selected{% endif %}>Low</option>
+                <option value="Medium" {% if request.args.get('impact_level') == 'Medium' %}selected{% endif %}>Medium</option>
+                <option value="High" {% if request.args.get('impact_level') == 'High' %}selected{% endif %}>High</option>
+            </select>
+        </div>
+        <div class="form-group mr-2">
+            <input type="text" name="polling_station" class="form-control" placeholder="Polling Station" value="{{ request.args.get('polling_station', '') }}">
+        </div>
+        <div class="form-group mr-2">
+            <input type="text" name="entered_by" class="form-control" placeholder="Entered By" value="{{ request.args.get('entered_by', '') }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+
+    {% if events %}
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Event Name</th>
+                    <th>Impact Level</th>
+                    <th>Event Leader</th>
+                    <th>Event Location</th>
+                    <th>Contact Person</th>
+                    <th>Event Description</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Created At</th>
+                    <th>Polling Station</th>
+                    <th>Entered By</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>{{ event.event_name }}</td>
+                        <td>{{ event.impact_level }}</td>
+                        <td>{{ event.event_leader }}</td>
+                        <td>{{ event.event_location }}</td>
+                        <td>{{ event.contact_person }}</td>
+                        <td>{{ event.event_description }}</td>
+                        <td>{{ event.start_date }}</td>
+                        <td>{{ event.end_date }}</td>
+                        <td>{{ event.created_at }}</td>
+                        <td>{{ event.polling_station.name }}</td>
+                        <td>{{ event.user.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No events found.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

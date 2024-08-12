@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block title %}Field Officers{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2>Field Officers Dashboard</h2>
+        <p>Welcome, Field Officer!</p>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Events</h5>
+                    <p class="card-text">Manage and view all events.</p>
+                    <a href="{{ url_for('events.view_events') }}" class="btn btn-secondary btn-block">View Events</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Reminders</h5>
+                    <p class="card-text">Manage and view all reminders.</p>
+                    <a href="{{ url_for('reminders.add_reminder') }}" class="btn btn-primary btn-block mb-2">Add Reminder</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Polling Stations</h5>
+                    <p>Search Polling Stations</p>
+                    <a href="{{ url_for('representation.select_polling_station') }}" class="btn btn-primary">Search Polling Stations</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

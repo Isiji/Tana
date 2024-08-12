@@ -1,0 +1,15 @@
+<!-- polling_stations.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<h2>Select Polling Station</h2>
+<form method="POST" action="{{ url_for('representation.submit_polling_station') }}">
+    <label for="polling_station">Polling Station:</label>
+    <select id="polling_station" name="polling_station">
+        {% for station in polling_stations %}
+            <option value="{{ station.id }}">{{ station.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

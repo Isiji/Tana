@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block title %} Driver Dashboard {% endblock %}
+{% block content %}
+
+<div class="container">
+    <h1>Welcome to Tana River Senate Office</h1>
+    <p>Our mission is to serve the people of Tana River County by providing the best services possible.</p>
+    <p>Our vision is to be the best Senate Office in Kenya.</p>
+
+    <h2>Driver Dashboard</h2>
+    <p>Driver: {{ current_user.name }}</p>
+    <p>Email: {{ current_user.email }}</p>
+
+    <h3>Registration Details</h3>
+    {% if current_employee %}
+        <p>Logged in: {{ current_employee.time_in.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        <p>Status: {{ current_employee.status }}</p>
+        <p>Date: {{ current_employee.date.strftime('%Y-%m-%d') }}</p>
+        <!-- Display other relevant fields like time_out, hours_worked, etc. -->
+    {% else %}
+        <p>No registration details found.</p>
+        <!-- Provide a message or link to register if no details are found -->
+        <a href="{{ url_for('Users.employee_register') }}" class="btn btn-primary">Register your status</a>
+    {% endif %}
+
+    <!-- Display a list of events entered. use view events only route -->
+    <h3>View events</h3>
+    <a href="{{ url_for('events.view_events') }}" class="btn btn-primary">View Events</a>
+    
+    <h3>Driver Profile</h3>
+    <p>Driver ID: {{ current_user.id }}</p>
+    <p>Driver Phone: {{ current_user.phone }}</p>
+    <p>Driver Address: {{ current_user.address }}</p>
+    <p>Driver National ID: {{ current_user.ID_No }}</p>
+</div>
+
+{% endblock %}

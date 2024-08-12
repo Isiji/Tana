@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Welcome to Tana River Senate Office</h1>
+    <p>Our mission is to serve the people of Tana River County by providing the best services possible.</p>
+    <p>Our vision is to be the best Senate Office in Kenya.</p>
+    <p>Our core values are:</p>
+    <ul>
+        <li>Integrity</li>
+        <li>Transparency</li>
+        <li>Accountability</li>
+        <li>Professionalism</li>
+    </ul>
+    <div class="mt-4">
+        <p>To access the Parliament website and fetch order papers, bills, motions, and Hansard, click the button below:</p>
+        <a href="http://www.parliament.go.ke/the-senate" class="btn btn-primary mb-2">Senate Order Paper</a>
+    </div>
+    <div class="mt-4">
+        <p>Search Polling Stations</p>
+        <a href="{{ url_for('representation.select_polling_station') }}" class="btn btn-primary">Search Polling Stations</a>
+    </div>
+</div>
+{% endblock %}

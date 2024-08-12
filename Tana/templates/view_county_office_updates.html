@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% block title %}County Office Updates{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>County Office Updates</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Party Involved</th>
+                <th>Issues</th>
+                <th>Delegation</th>
+                <th>Contact Person</th>
+                <th>Action Taken</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for update in updates %}
+            <tr>
+                <td>{{ update.date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ update.party_involved }}</td>
+                <td>{{ update.issues }}</td>
+                <td>{{ update.delegation }}</td>
+                <td>{{ update.contact_person }}</td>
+                <td>{{ update.action_taken }}</td>
+                <td>
+                    <a href="{{ url_for('coordinators.edit_county_office_update', update_id=update.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ url_for('coordinators.delete_county_office_update', update_id=update.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

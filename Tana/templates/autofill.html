@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block title %} Autofill Result {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Autofill Result</h2>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <form method="post">
+        <div class="form-group">
+            <label for="polling_station">Enter Polling Station Name:</label>
+            <input type="text" class="form-control" id="polling_station" name="polling_station">
+        </div>
+        <button type="submit" class="btn btn-primary">Autofill</button>
+    </form>
+    
+    {% if result %}
+        <hr>
+        <h3>Autofill Details:</h3>
+        <p><strong>Polling Station:</strong> {{ result['Polling Station'] }}</p>
+        <p><strong>Ward:</strong> {{ result['Ward'] }}</p>
+        <p><strong>Constituency:</strong> {{ result['Constituency'] }}</p>
+    {% endif %}
+    
+    <a href="{{ url_for('representation.process_csv') }}" class="btn btn-secondary">Process Another CSV</a>
+</div>
+{% endblock %}

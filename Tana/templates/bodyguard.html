@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% block title %}Bodyguards Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1>Welcome to Tana River Senate Office</h1>
+        <p>Our mission is to serve the people of Tana River County by providing the best services possible.</p>
+        <p>Our vision is to be the best Senate Office in Kenya.</p>
+    </div>
+
+    <div class="mb-4">
+        <h4>The following are what you can access and do:</h4>
+        <ul>
+            <li>A bodyguard can easily check into work here to show the time logged in.</li>
+        </ul>
+    </div>
+
+    <div class="mb-4 text-center">
+        <h4>Register the time in and time out:</h4>
+        <a href="{{ url_for('Users.employee_register') }}" class="btn btn-primary">Register Your Status</a>
+    </div>
+
+    <div class="mb-4 text-center">
+        <h3>View Events</h3>
+        <a href="{{ url_for('events.view_events') }}" class="btn btn-primary">View Events</a>
+    </div>
+
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 class="card-title">Bodyguard Profile</h3>
+            <p><strong>Bodyguard ID:</strong> {{ current_user.id }}</p>
+            <p><strong>Bodyguard Name:</strong> {{ current_user.name }}</p>
+            <p><strong>Bodyguard Email:</strong> {{ current_user.email }}</p>
+            <p><strong>Bodyguard Phone:</strong> {{ current_user.phone }}</p>
+            <p><strong>Bodyguard National ID:</strong> {{ current_user.ID_No }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

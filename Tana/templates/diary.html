@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>View Diaries</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Entry Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for diary in diaries %}
+            <tr>
+                <td>{{ diary.title }}</td>
+                <td>{{ diary.content }}</td>
+                <td>{{ diary.entry_date }}</td>
+                <td>
+                    <a href="{{ url_for('Users.edit_diary', diary_id=diary.id) }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ url_for('Users.delete_diary', diary_id=diary.id) }}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

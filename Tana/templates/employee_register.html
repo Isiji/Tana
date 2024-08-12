@@ -1,0 +1,45 @@
+<!-- templates/employee_register.html -->
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Register Employee</h1>
+<form method="POST" action="{{ url_for('Users.employee_register') }}">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.user_id.label }}<br>
+        {{ form.user_id(size=32, readonly=True) }}<br>
+        {% for error in form.user_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.name.label }}<br>
+        {{ form.name(size=32, readonly=True) }}<br>
+        {% for error in form.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.time_in.label }}<br>
+        {{ form.time_in(size=32) }}<br>
+        {% for error in form.time_in.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.date.label }}<br>
+        {{ form.date(size=32, readonly=True) }}<br>
+        {% for error in form.date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.status.label }}<br>
+        {{ form.status() }}<br>
+        {% for error in form.status.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}

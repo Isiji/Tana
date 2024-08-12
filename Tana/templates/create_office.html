@@ -1,0 +1,80 @@
+{%extends 'layout.html'%}
+{% block title %} Create Office {% endblock %}
+{% block content %}
+  <h2>Create Office</h2>
+  <form method="POST">
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">Create a new office</legend>
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.office_name.label(class="form-control-label") }}
+        {% if form.office_name.errors %}
+          {{ form.office_name(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.office_name.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.office_name(class="form-control form-control-lg") }}
+        {% endif %}
+      </div>
+      <div class="form-group">
+        {{ form.office_location.label(class="form-control-label") }}
+        {% if form.office_location.errors %}
+          {{ form.office_location(class="form-control form-control-lg is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in form.office_location.errors %}
+              <span>{{ error }}</span>
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ form.office_location(class="form-control form-control-lg") }}
+        {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.office_description.label(class="form-control-label") }}
+            {% if form.office_description.errors %}
+            {{ form.office_description(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.office_description.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.office_description(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.office_manager.label(class="form-control-label") }}
+            {% if form.office_manager.errors %}
+            {{ form.office_manager(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.office_manager.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.office_manager(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.email.label(class="form-control-label") }}
+            {% if form.email.errors %}
+            {{ form.email(class="form-control form-control-lg is-invalid") }}
+            <div class="invalid-feedback">
+                {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+                {% endfor %}
+            </div>
+            {% else %}
+            {{ form.email(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+
+    </fieldset>
+    <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Create Office</button>
+    </div>
+    </form>
+{% endblock %}
