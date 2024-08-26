@@ -5,6 +5,7 @@ from sqlalchemy import Column, String, Integer, ForeignKey
 from sqlalchemy.orm import relationship
 
 class Constituency(BaseModel, Base):
+    """ This class defines the constituency model, used to store the constituencies """
     __tablename__ = 'constituencies'
     name = Column(String(128), nullable=False)
     wards = relationship("Ward", back_populates="constituency")

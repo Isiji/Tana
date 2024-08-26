@@ -1,8 +1,12 @@
+
+#!/usr/bin/env python3
+"""Committee records module for the committee records"""  
 from sqlalchemy import Column, String, Integer, ForeignKey, Date, LargeBinary
 from Tana.models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 
 class CommitteeRecord(Base, BaseModel):
+    """This class defines the committee records model"""
     __tablename__ = 'committee_records'
     
     id = Column(Integer, primary_key=True)

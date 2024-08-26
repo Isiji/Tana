@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Bills class module for the bills"""
+"""Bills class module for the bills, it includes a field for the 
+document and the filename of the document"""
 from Tana.models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Date, Boolean, LargeBinary
 

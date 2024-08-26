@@ -3,8 +3,7 @@
 from datetime import datetime
 import uuid
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, DateTime, Integer
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, DateTime, Integer
 from Tana.engine import storage
 
 time = "%Y-%m-%dT%H:%M"

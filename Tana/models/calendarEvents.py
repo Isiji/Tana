@@ -2,8 +2,6 @@
 """CalendarEvents class module for the calendarEvents"""
 from Tana.models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey, Date
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
 
 class CalendarEvents(BaseModel, Base):
     """This class defines the calendarEvents model"""

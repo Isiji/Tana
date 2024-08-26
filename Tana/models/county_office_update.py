@@ -1,5 +1,6 @@
+#!/usr/bin/python3
+"""County office update module for the county office update"""
 from sqlalchemy import Column, String, Date, Text, Integer
-from sqlalchemy.orm import relationship
 from Tana.models.base_model import BaseModel, Base
 
 

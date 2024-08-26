@@ -2,9 +2,11 @@
 """ employees should be able to register and time in and out of work"""
 
 from Tana.models.base_model import BaseModel, Base
-from sqlalchemy import Column, Time, String, DateTime, Integer, ForeignKey, Date, Boolean, Enum
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Column, String, Integer, Date
+
 class EmployeeRegister(BaseModel, Base):
+    """ This class defines the employee register model, where employees
+    can register and time in and out of work """
     __tablename__ = 'employee_register'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, nullable=False)
