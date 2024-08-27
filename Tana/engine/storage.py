@@ -9,7 +9,6 @@ from Tana.models.members import users
 from Tana.models.roles import UserRole
 from Tana.models.offices import Offices
 from Tana.models.reminder import Reminder
-from Tana.models.tasks import Tasks
 from Tana.models.diary import Diary
 from Tana.models.calendarEvents import CalendarEvents
 from Tana.models.events import Events
@@ -56,7 +55,7 @@ class DBStorage:
                     key = "{}.{}".format(cls.__name__, obj.id)
                     objects[key] = obj
             else:
-                classes = [users, UserRole, Offices, CommitteeRecord, Committee, CountyOfficeUpdate, Reminder, Tasks, Diary, CalendarEvents, Events, ImpactLevel, EventCategory, PollingStation, Ward, Constituency, Bills, EmployeeRegister, Motions, Questions, SecondaryOversight, Statements]
+                classes = [users, UserRole, Offices, CommitteeRecord, Committee, CountyOfficeUpdate, Reminder, Diary, CalendarEvents, Events, ImpactLevel, EventCategory, PollingStation, Ward, Constituency, Bills, EmployeeRegister, Motions, Questions, SecondaryOversight, Statements]
                 for cls in classes:
                     query_result = self.__session.query(cls).all()
                     for obj in query_result:

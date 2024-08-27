@@ -20,8 +20,6 @@ class users(BaseModel, Base, UserMixin):
     office_id = Column(Integer, ForeignKey('offices.id'), nullable=True)
 
     diaries = relationship("Diary", back_populates="user")
-    tasks_assigned = relationship("Tasks", back_populates="assigned_by_user", foreign_keys="Tasks.assigned_by")
-    tasks_assigned_to = relationship("Tasks", back_populates="assigned_to_user", foreign_keys="Tasks.assigned_to")
     reminders = relationship("Reminder", back_populates="user")
     offices = relationship("Offices", back_populates="users")
     events = relationship("Events", back_populates="user")

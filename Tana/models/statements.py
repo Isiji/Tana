@@ -1,3 +1,5 @@
+#!/usr/bin/env python3  
+"""Statements class module for the statements, where the statements are stored"""
 from sqlalchemy import Column, String, Integer, Date, Enum, LargeBinary, Text
 from Tana.models.base_model import BaseModel, Base
 class Statements(BaseModel, Base):

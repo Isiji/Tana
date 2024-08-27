@@ -4,7 +4,6 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from Tana.models.offices import Offices
 from Tana.models.members import users
 from Tana.models.events import Events
-from Tana.models.tasks import Tasks
 from Tana.models.diary import Diary
 from Tana.models.calendarEvents import CalendarEvents
 from Tana.models.reminder import Reminder

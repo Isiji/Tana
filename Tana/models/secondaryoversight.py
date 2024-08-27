@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship, backref
 
 
 class SecondaryOversight(BaseModel, Base):
+    """ This class defines the secondary oversight model"""
     __tablename__ = 'secondary_oversight'
     id = Column(Integer, primary_key=True)
     name = Column(String(255), nullable=False)
