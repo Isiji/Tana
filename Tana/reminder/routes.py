@@ -1,3 +1,4 @@
+# Description: Routes for handling reminders in the application.
 from flask import current_app, Blueprint, render_template, redirect, url_for, flash
 from flask_login import current_user, login_required
 from Tana.models.reminder import Reminder
@@ -8,6 +9,7 @@ from flask_mail import Message
 
 reminders = Blueprint('reminders', __name__)
 
+# route for adding a reminder
 @reminders.route('/add_reminder', methods=['GET', 'POST'])
 @login_required
 def add_reminder():
@@ -44,6 +46,7 @@ def add_reminder():
 
     return render_template('reminders.html', title='Reminders', form=form, reminders=user_reminders)
 
+# Define the route for sending a reminder  
 def send_reminder_email(user_email, reminder):
     """Send email notification for a new reminder"""
     msg = Message('New Reminder Set', sender=current_app.config['MAIL_DEFAULT_SENDER'], recipients=[user_email])
@@ -53,3 +56,4 @@ def send_reminder_email(user_email, reminder):
         print("Reminder email sent successfully.")
     except Exception as e:
         print(f"Failed to send reminder email: {e}")
+        current_app.logger.error(f"Failed to send reminder email: {e}") 

@@ -21,8 +21,10 @@ logger.addHandler(file_handler)
 
 CSV_FILE_PATH = os.path.join(os.getcwd(), 'Tana', 'representation', 'tanawards.csv')
 
+# Define the pollings stations route
 @representation.route('/get_polling_station_suggestions', methods=['GET'])
 def get_polling_station_suggestions():
+    """ Route to get polling station suggestions """
     search_term = request.args.get('term', '').strip().lower()
     
     try:
@@ -36,19 +38,25 @@ def get_polling_station_suggestions():
         current_app.logger.error(f"Error reading CSV file: {e}")
         return jsonify({'error': 'Error fetching polling station suggestions'}), 500
 
+# Define the polling stations route
 @representation.route('/pollingstations', methods=['GET'])
 def pollingstations():
+    """ Route to get all polling stations """
     constituencies = db_storage.all(Constituency).values()
     wards = db_storage.all(Ward).values()
     polling_stations = db_storage.all(PollingStation).values()
     return render_template('results.html', title='Results', constituencies=constituencies, wards=wards, polling_stations=polling_stations)
 
+# Define the select polling station route from the dropdown
 @representation.route('/select_polling_station', methods=['GET'])
 def select_polling_station():
+    """ Route to select a polling station from drop down"""
     return render_template('select_polling_station.html')
 
+# gets all the polling station
 @representation.route('/get_all_polling_stations', methods=['GET'])
 def get_all_polling_stations():
+    """ Route to get all polling stations """
     current_app.logger.info('Fetching all polling stations')
     try:
         polling_stations = db_storage.all(PollingStation)
@@ -58,9 +66,11 @@ def get_all_polling_stations():
     except Exception as e:
         current_app.logger.error('Error fetching polling stations: %s', e)
         return jsonify({"error": str(e)}), 500
-
+    
+# Define the route to get polling station info
 @representation.route('/get_polling_station_info', methods=['GET'])
 def get_polling_station_info():
+    """ Route to get polling station info """
     polling_station_name = request.args.get('polling_station')
     logging.debug(f"Received request for /get_polling_station_info with polling_station={polling_station_name}")
     polling_station = db_storage.get_pollingstation_by_name(polling_station_name)
@@ -79,9 +89,10 @@ def get_polling_station_info():
     
 
 
-
+# Define the route to get polling station details by name
 @representation.route('/pollingstations/<polling_station_name>', methods=['GET'])
 def get_polling_station_details_by_name(polling_station_name):
+    """ Route to get polling station details by name """
     polling_station = db_storage.get_polling_station_by_name(polling_station_name)
     if polling_station:
         return jsonify({

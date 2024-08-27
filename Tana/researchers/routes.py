@@ -21,23 +21,27 @@ COMMITTEES = [
     {'id': 6, 'name': 'CPIC'},
 ]
 
+# Define the routes
 @researchers.route('/committees', methods=['GET'])
 @login_required
 def committees():
+    """ Route to display the committees """
     form = CommitteeRecordForm()
     return render_template('committees.html', title='Committees', form=form, committees=COMMITTEES)
 
-
+# Define the route for the committee records
 @researchers.route('/committee/<int:committee_id>/records', methods=['GET'])
 @login_required
 def committee_records(committee_id):
+    """ Route to display the records of a committee """
     records = db_storage.filter(CommitteeRecord, CommitteeRecord.committee_id == committee_id)
     return render_template('committee_records.html', records=records, committee_id=committee_id)
 
-
+# Define the route for a specific committee
 @researchers.route('/committee/<int:committee_id>', methods=['GET', 'POST'])
 @login_required
 def committee(committee_id):
+    """ Route to display a specific committee """
     committee = next((c for c in COMMITTEES if c['id'] == committee_id), None)
     if not committee:
         flash('Committee not found.', 'danger')
@@ -68,9 +72,11 @@ def committee(committee_id):
     records = db_storage.filter(CommitteeRecord, CommitteeRecord.committee_id == committee_id)
     return render_template('committee.html', committee=committee, records=records, form=form)
 
+# Define the route to download a document
 @researchers.route('/download_document/<int:record_id>', methods=['GET'])
 @login_required
 def download_document(record_id):
+    """ Route to download the document """
     try:
         record = db_storage.get(CommitteeRecord, id=record_id)
         
@@ -99,9 +105,12 @@ def download_document(record_id):
         flash(f'An error occurred while downloading the document: {e}', 'error')
         return redirect(url_for('researchers.committee_records', committee_id=record_id))
 
+
+# Define the route to download recommendations
 @researchers.route('/download_recommendations/<int:record_id>', methods=['GET'])
 @login_required
 def download_recommendations(record_id):
+    """ Route to download the recommendations"""
     try:
         record = db_storage.get(CommitteeRecord, id=record_id)
         

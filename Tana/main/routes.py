@@ -10,6 +10,7 @@ from flask import session
 
 main = Blueprint('main', __name__)
 
+#route for the homepage
 @main.route('/')
 @main.route('/home')
 def home():

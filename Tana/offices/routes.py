@@ -61,9 +61,8 @@ def office_details(office_id):
         return redirect(url_for('offices.office_details', office_id=office_id))
     
     return render_template('office_details.html', title=office.office_name, office=office, members=members, form=form)
+
 #route for office dashboard
-
-
 @offices.route('/office_dashboard', methods=['POST', 'GET'], strict_slashes=False)
 def office_dashboard():
     """route for the office dashboard"""
