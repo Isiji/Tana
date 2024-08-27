@@ -11,12 +11,14 @@ from Tana.models.county_office_update import CountyOfficeUpdate
 
 coordinators = Blueprint('coordinators', __name__)
 
+#route for the coordinator dashboard
 @coordinators.route('/coordinator_dashboard')
 @login_required
 def coordinator_dashboard():
     """Route for the coordinator dashboard"""
     return render_template('coordinator.html', title='Coordinator Dashboard')
 
+#route for adding a county office update
 @coordinators.route('/add_county_office_update', methods=['GET', 'POST'])
 @login_required
 def add_county_office_update():
@@ -37,6 +39,7 @@ def add_county_office_update():
         return redirect(url_for('coordinators.view_county_office_updates'))
     return render_template('county_office_update_form.html', title='Add County Office Update', form=form)
 
+#route for viewing all county office updates
 @coordinators.route('/view_county_office_updates', methods=['GET'])
 @login_required
 def view_county_office_updates():
@@ -45,6 +48,7 @@ def view_county_office_updates():
     updates = list(updates_dict.values())
     return render_template('view_county_office_updates.html', title='View County Office Updates', updates=updates)
 
+#route for editing a county office update
 @coordinators.route('/edit_county_office_update/<int:update_id>', methods=['GET', 'POST'])
 @login_required
 def edit_county_office_update(update_id):
@@ -68,6 +72,7 @@ def edit_county_office_update(update_id):
 
     return render_template('county_office_update_form.html', title='Edit County Office Update', form=form)
 
+#route for deleting a county office update
 @coordinators.route('/delete_county_office_update/<int:update_id>', methods=['POST'])
 @login_required
 def delete_county_office_update(update_id):

@@ -199,7 +199,7 @@ def events_data():
     ]
     return jsonify(events_list)
 
-
+#route to view the calendar
 @events_bp.route('/calendar', methods=['GET'])
 def calendar():
     """Route to view the calendar"""

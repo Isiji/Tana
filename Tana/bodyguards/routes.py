@@ -9,6 +9,7 @@ from flask_login import login_user, current_user, logout_user, login_required, L
 
 bodyguards = Blueprint('bodyguards', __name__)
 
+# create route for the bodyguard dashboard
 @bodyguards.route('/bodyguard_dashboard')
 @login_required
 def bodyguard_dashboard():

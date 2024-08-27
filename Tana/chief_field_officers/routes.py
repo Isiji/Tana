@@ -9,6 +9,7 @@ from flask_login import login_user, current_user, logout_user, login_required, L
 
 chieffieldofficers = Blueprint('chieffieldofficers', __name__)
 
+# create route for the chief field officer dashboard
 @chieffieldofficers.route('/chieffieldofficer_dashboard')
 @login_required
 def chieffieldofficer_dashboard():

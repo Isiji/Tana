@@ -16,8 +16,10 @@ bills_bp = Blueprint('bills', __name__)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
+# Route for adding a bill
 @bills_bp.route('/add_bill', methods=['GET', 'POST'], strict_slashes=False)
 def add_bill():
+    """ Route for adding a bill """
     print("add bill route has been hit")
     form = BillsForm()
     if form.validate_on_submit():
@@ -63,14 +65,18 @@ def add_bill():
     return render_template('add_bill.html', form=form)
 
 
+# Route for viewing all bills
 @bills_bp.route('/view_bills', methods=['GET'], strict_slashes=False)
 def view_bills():
+    """ Route for viewing all bills """
     bills_dict = db_storage.all(Bills)
     bills = list(bills_dict.values())
     return render_template('view_bills.html', bills=bills)
 
+# Route for editing a bill
 @bills_bp.route('/edit_bill/<int:bill_id>', methods=['GET', 'POST'], strict_slashes=False)
 def edit_bill(bill_id):
+    """ Route for editing a bill """
     bill = db_storage.get(Bills, id=bill_id)
     if not bill:
         flash(f'Bill with ID {bill_id} not found.', 'error')
@@ -97,7 +103,6 @@ def edit_bill(bill_id):
             bill.presidential_assent_date = form.presidential_assent_date.data
             bill.commencement = form.commencement.data
             bill.commencement_date = form.commencement_date.data
-            # Add any other bill attributes here as necessary
             
             db_storage.save()
             flash('Bill has been updated!', 'success')
@@ -111,8 +116,10 @@ def edit_bill(bill_id):
     return render_template('edit_bill.html', title='Edit Bill', form=form, bill=bill)
 
 
+# Route for deleting a bill
 @bills_bp.route('/delete_bill/<int:bill_id>', methods=['POST'], strict_slashes=False)
 def delete_bill(bill_id):
+    """ delete a bill """
     bill = db_storage.get(Bills, bill_id)
     db_storage.delete(bill)
     db_storage.save()
@@ -120,6 +127,7 @@ def delete_bill(bill_id):
     return redirect(url_for('bills.view_bills'))
 
 
+# Route to download a bill
 @bills_bp.route('/download_bill/<int:bill_id>', methods=['GET'])
 def download_bill(bill_id):
     """Route to download a bill."""
