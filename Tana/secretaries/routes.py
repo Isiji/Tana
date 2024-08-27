@@ -9,6 +9,7 @@ from flask_login import login_user, current_user, logout_user, login_required, L
 
 secretaries = Blueprint('secretaries', __name__)
 
+#route for the secretary dashboard
 @secretaries.route('/secretary_dashboard')
 @login_required
 def secretary_dashboard():

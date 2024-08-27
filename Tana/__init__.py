@@ -14,7 +14,7 @@ from Tana.models.constituency import Constituency
 from Tana.models.ward import Ward
 from Tana.models.pollingstation import PollingStation
 from Tana.models.members import users
-from Tana.models.committees import Committee  # Import Committee model
+from Tana.models.committees import Committee  
 from flask_wtf.csrf import CSRFProtect
 from datetime import datetime
 

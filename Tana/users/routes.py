@@ -88,7 +88,7 @@ def employee_register():
     form = EmployeeRegisterForm()
 
     if request.method == 'GET':
-        # Pre-fill the form with current user info
+        # Pre-fills the form with current user info
         form.user_id.data = current_user.id
         form.name.data = current_user.name
         form.date.data = datetime.now().date()
@@ -106,7 +106,7 @@ def employee_register():
             new_employee = EmployeeRegister(
                 user_id=user_id,
                 name=name,
-                time_in=time_in,  # No need to convert to datetime.time()
+                time_in=time_in, 
                 date=date,
                 status=status
             )
@@ -178,9 +178,10 @@ def employee_records():
 
     return render_template('employee_records.html', title='Employee Records', employees=employees)
 
-
+#route for uploading a document
 @Users.route('/upload', methods=['GET', 'POST'])
 def upload():
+    """ Route to upload a file """
     form = FileUploadForm()
     if form.validate_on_submit():
         file = form.file.data
@@ -195,8 +196,10 @@ def upload():
             flash('Invalid file type', 'danger')
     return render_template('upload.html', form=form)
 
+#route for downloading a document
 @Users.route('/search', methods=['GET'])
 def search():
+    """ Route to search for a file """
     polling_station_name = request.args.get('polling_station')
     polling_station = PollingStation.query.filter_by(name=polling_station_name).first()
     if polling_station:
@@ -205,8 +208,10 @@ def search():
         return jsonify({'ward': ward.name, 'constituency': constituency.name})
     return jsonify({'error': 'Polling station not found'}), 404
 
+#route for downloading a document
 @Users.route('/login', methods=['GET', 'POST'])
 def login():
+    """ this is the login route"""
     if current_user.is_authenticated:
         return redirect(url_for('Users.redirect_based_on_role'))  # Redirect to role-based redirect after login
 
@@ -240,7 +245,7 @@ def login():
     
     return render_template('login.html', title='Login', form=form)
 
-
+#route for redirecting users when they log in
 @Users.route('/redirect_based_on_role', methods=['GET', 'POST'])
 @login_required
 def redirect_based_on_role():
@@ -387,8 +392,10 @@ def reset_request():
     
     return render_template('reset_request.html', form=form)
 
+# route to reset the password
 @Users.route('/reset_token/<token>', methods=['GET', 'POST'])
 def reset_token(token):
+    """ this function is used to reset the password"""
     form = ResetPasswordForm()
     validation_response = validate_token(token, current_app.config['SECRET_KEY'])
     if isinstance(validation_response, str):
@@ -408,6 +415,7 @@ def reset_token(token):
     
     return render_template('reset_password.html', form=form)
 
+#route for checking the token
 @Users.route('/protected_route', methods=['GET'])
 def protected_route():
     token = request.headers.get('Authorization')
@@ -423,7 +431,9 @@ def protected_route():
     # Continue processing the request...
     return jsonify({"message": "Access granted"})
 
+#route for sending reset email
 def send_reset_email(user):
+    """ this function is used to send the reset email"""
     token = user.get_reset_token()
     logging.debug(f'Token: {token}')
     msg = Message('Password Reset Request',
