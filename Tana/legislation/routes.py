@@ -23,6 +23,7 @@ logger = logging.getLogger(__name__)
 
 legislation_bp = Blueprint('legislation', __name__)
 
+#route for the legislation
 @legislation_bp.route('/legislation')
 def legislation():
     """route for the legislation"""
@@ -66,23 +67,28 @@ def add_motion():
     return render_template('add_motion.html', title='Add Motion', form=form)
 
 
-
+#route for viewing motions
 @legislation_bp.route('/motions', methods=['GET'])
 def motions():
+    """ route for viewing motions"""
     motions_dict = db_storage.all(Motions)
     motions = list(motions_dict.values())
     return render_template('motions.html', title='View Motions', motions=motions)
 
+#create function to delete motions
 @legislation_bp.route('/delete_motion/<int:motion_id>', methods=['POST'], strict_slashes=False)
 def delete_motion(motion_id):
+    """ Route for deleting a motion """
     motion = db_storage.get(Motions, id=motion_id)
     db_storage.delete(motion)
     db_storage.save()
     flash('Motion has been deleted!', 'success')
     return redirect(url_for('legislation.motions'))
 
+#create function to edit motions
 @legislation_bp.route('/edit_motion/<int:motion_id>', methods=['GET', 'POST'], strict_slashes=False)
 def edit_motion(motion_id):
+    """ Route for editing motions """
     motion = db_storage.get(Motions, id=motion_id)
     if not motion:
         flash(f'Motion with ID {motion_id} not found.', 'error')
@@ -115,16 +121,18 @@ def edit_motion(motion_id):
 #route for viewing motions
 @legislation_bp.route('/view_motions', methods=['GET'])
 def view_motions():
+    """ route for viewing motions"""
     motions_dict = db_storage.all(Motions)
     motions = list(motions_dict.values())
     return render_template('motions.html', title='View Motions', motions=motions)
 
+#route for viewing statements
 @legislation_bp.route('/statements', methods=['GET', 'POST'])
 def statements():
     """route for the statements"""
     return render_template('view_statements.html', title='Statements')
 
-
+#create route for adding statements
 @legislation_bp.route('/add_statement', methods=['GET', 'POST'])
 def add_statement():
     """Route for adding statements"""
@@ -161,9 +169,10 @@ def add_statement():
     
     return render_template('add_statement.html', title='Add Statement', form=form)
 
-
+#create route to view statements
 @legislation_bp.route('/view_statements', methods=['GET'])
 def view_statements():
+    """ route for viewing statements"""
     statements_dict = db_storage.all(Statements)
     statements = list(statements_dict.values())
     return render_template('view_statements.html', title='View Statements', statements=statements)
@@ -171,6 +180,7 @@ def view_statements():
 #create function to edit statements
 @legislation_bp.route('/edit_statement/<int:statement_id>', methods=['GET', 'POST'])
 def edit_statement(statement_id):
+    """ Route for editing statements """
     statement = db_storage.get(Statements, id=statement_id)
     if not statement:
         flash(f'Statement with ID {statement_id} not found.', 'error')
@@ -206,6 +216,7 @@ def edit_statement(statement_id):
 #create function to delete statements
 @legislation_bp.route('/delete_statement/<int:statement_id>', methods=['POST'], strict_slashes=False)
 def delete_statement(statement_id):
+    """ Route for deleting a statement """
     statement = db_storage.get(Statements, id=statement_id)
     db_storage.delete(statement)
     db_storage.save()
@@ -213,15 +224,17 @@ def delete_statement(statement_id):
     return redirect(url_for('legislation.view_statements'))
 
 
-
+#create route for questions
 @legislation_bp.route('/questions', methods=['GET', 'POST'])
 @login_required
 def questions():
     """route for the questions"""
     return render_template('view_questions.html', title='Questions')
 
+#create route to add questions
 @legislation_bp.route('/add_question', methods=['GET', 'POST'])
 def add_question():
+    """ Route for adding questions """
     form = QuestionsForm()
     if form.validate_on_submit():
         try:
@@ -252,15 +265,18 @@ def add_question():
 
 
 
-#create route to view questions
+#route to view questions
 @legislation_bp.route('/view_questions', methods=['GET', 'POST'])
 def view_questions():
+    '''route for viewing questions'''
     questions_dict = db_storage.all(Questions)
     questions = list(questions_dict.values())
     return render_template('view_questions.html', title='View Questions', questions=questions)
 
+#create function to edit questions
 @legislation_bp.route('/edit_question/<int:question_id>', methods=['GET', 'POST'], strict_slashes=False)
 def edit_question(question_id):
+    """ Route for editing questions """
     question = db_storage.get(Questions, id=question_id)
     form = QuestionsForm(obj=question)
     if form.validate_on_submit():
@@ -281,6 +297,7 @@ def edit_question(question_id):
 #create function to delete statements
 @legislation_bp.route('/delete_question/<int:question_id>', methods=['POST'], strict_slashes=False)
 def delete_question(question_id):
+    """ Route for deleting a question """  
     question = db_storage.get(Questions, id=question_id)
     db_storage.delete(question)
     db_storage.save()
@@ -294,8 +311,10 @@ def functions():
     """route for the functions"""
     return render_template('functions.html', title='Functions')
 
+#roue for downloading motion document
 @legislation_bp.route('/download_motion/<int:motion_id>', methods=['GET'])
 def download_motion(motion_id):
+    """ Route to download a motion document """
     try:
         motion = db_storage.get(Motions, id=motion_id)
         if not motion:
@@ -313,9 +332,11 @@ def download_motion(motion_id):
         logging.error(f"An error occurred: {e}")
         flash(f'An error occurred while downloading the motion: {e}', 'error')
         return redirect(url_for('legislation.view_motions'))
-    
+
+#route for downloading follow up document    
 @legislation_bp.route('/download_follow_up_document/<int:motion_id>', methods=['GET'])
 def download_follow_up_document(motion_id):
+    ''' Route to download a motion follow-up document '''
     try:
         motion = db_storage.get(Motions, id=motion_id)
         if not motion or not motion.follow_up_document:
@@ -334,9 +355,10 @@ def download_follow_up_document(motion_id):
         flash(f'An error occurred while downloading the follow-up document: {e}', 'error')
         return redirect(url_for('legislation.view_motions'))
 
-
+# route for downloading statement document
 @legislation_bp.route('/download_statement/<int:statement_id>', methods=['GET'])
 def download_statement(statement_id):
+    """ Route to download a statement document"""
     try:
         statement = db_storage.get(Statements, id=statement_id)
         if not statement:
@@ -375,8 +397,10 @@ def download_statement(statement_id):
         flash(f'An error occurred while downloading the statement: {e}', 'error')
         return redirect(url_for('legislation.view_statements'))
 
+#route for downloading question document
 @legislation_bp.route('/download_question/<int:question_id>/<string:document_type>', methods=['GET'])
 def download_question(question_id, document_type):
+    """ Route to download a question document"""
     try:
         question = db_storage.get(Questions, id=question_id)
         if not question:
@@ -408,9 +432,10 @@ def download_question(question_id, document_type):
         return redirect(url_for('legislation.view_questions'))
 
 
-
+#route for downloading follow up letter
 @legislation_bp.route('/download_follow_up_letter/<int:statement_id>', methods=['GET'])
 def download_follow_up_letter(statement_id):
+    """ Route to download a statement follow-up letter """
     try:
         statement = db_storage.get(Statements, id=statement_id)
         if not statement:

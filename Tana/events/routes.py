@@ -123,6 +123,7 @@ def view_events_only():
     
     return render_template('events.html', events=events)
 
+# create a route to delete an event 
 @events_bp.route('/delete_event/<int:event_id>', methods=['GET', 'POST'], strict_slashes=False)
 @login_required
 def delete_event(event_id):
@@ -135,6 +136,7 @@ def delete_event(event_id):
     flash('Event has been deleted!', 'success')
     return redirect(url_for('events.view_events'))
 
+# create a route to edit an event
 @events_bp.route('/edit_event/<int:event_id>', methods=['GET', 'POST'])
 @login_required
 def edit_event(event_id):
@@ -150,6 +152,7 @@ def edit_event(event_id):
 
     return render_template('edit_event.html', form=form, event=event)
 
+#route to geyt all polling stations
 @events_bp.route('/get_all_polling_stations', methods=['GET'])
 def get_all_polling_stations():
     """Route to get all polling station names"""
@@ -157,6 +160,7 @@ def get_all_polling_stations():
     polling_station_names = [station.name for station in polling_stations]
     return jsonify({'pollingStations': polling_station_names})
 
+#route to get polling station info
 @events_bp.route('/get_polling_station_info', methods=['GET'])
 def get_polling_station_info():
     """Route to get polling station information"""
@@ -178,8 +182,10 @@ def get_polling_station_info():
         'constituency': constituency.name
     })
 
+#route to get events data
 @events_bp.route('/events_data', methods=['GET'])
 def events_data():
+    
     events = db_storage.all(Events)
     events_list = [
         {

@@ -9,7 +9,7 @@ from flask_login import login_user, current_user, logout_user, login_required, L
 
 fieldofficers = Blueprint('fieldofficers', __name__)
 
-
+#route for the field officers dashboard
 @fieldofficers.route('/field_officers')
 def field_officers():
     return render_template('field_officers.html')
