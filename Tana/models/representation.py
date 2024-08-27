@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """representation class module for the representation"""
 from Tana.models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, ForeignKey, Date, Boolean, Enum
+from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship, backref
 
 class Representation(BaseModel, Base):
+    """ This class defines the representation model"""
     __tablename__ = 'representation'
     id = Column(Integer, primary_key=True)
     constituency = Column(String(128), nullable=False)

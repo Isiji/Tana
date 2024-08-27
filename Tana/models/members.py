@@ -9,7 +9,7 @@ from itsdangerous import URLSafeSerializer, BadSignature
 from flask import current_app
 from datetime import datetime, timedelta
 class users(BaseModel, Base, UserMixin):
-    """This class defines the users model"""
+    """This class defines the users model, it has several attributes and relationships"""
     __tablename__ = 'users'
     name = Column(String(128), nullable=False)
     email = Column(String(128), nullable=False, unique=True)

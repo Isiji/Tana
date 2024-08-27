@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Questions class module for the questions, where the questions are stored"""
 from Tana.models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Date, Enum, LargeBinary
 

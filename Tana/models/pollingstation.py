@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+"""PollingStation class module for the polling stations, it has 
+several attributes and relationships"""
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from Tana.models.base_model import BaseModel, Base

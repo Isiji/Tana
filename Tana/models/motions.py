@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+"""Motions class module for the motions, where the motions are stored"""
 from sqlalchemy import Column, String, Integer, Date, Enum, LargeBinary
 from Tana.models.base_model import BaseModel, Base
 
