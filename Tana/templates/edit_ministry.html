@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2>Edit Ministry</h2>
-    <form method="POST" action="{{ url_for('ministries.edit_ministry', id=form.id.data) }}">
+    <form method="POST" action="{{ url_for('ministries.edit_ministry', id=form.id.data) }}" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div class="form-group">
             {{ form.name.label(class="form-label") }}
@@ -38,6 +38,11 @@
             {{ form.documents_presented(class="form-control") }}
             {% if form.documents_presented.errors %}
                 <div class="text-danger">{{ form.documents_presented.errors[0] }}</div>
+            {% endif %}
+            {% if form.documents_filename.data %}
+                <div class="mt-2">
+                    <a href="{{ url_for('ministries.download_ministry', ministry_id=form.id.data) }}" class="btn btn-info btn-sm">Download Existing Document</a>
+                </div>
             {% endif %}
         </div>
         <div class="form-group">

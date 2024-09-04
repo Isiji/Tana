@@ -23,7 +23,13 @@
                 <td>{{ ministry.contact_person }}</td>
                 <td>{{ ministry.mobile_number }}</td>
                 <td>{{ ministry.email }}</td>
-                <td>{{ ministry.documents_presented }}</td>
+                <td>
+                    {% if ministry.documents_filename %}
+                        <a href="{{ url_for('ministries.download_ministry', ministry_id=ministry.id) }}" class="btn btn-info btn-sm">Download</a>
+                    {% else %}
+                        No Document
+                    {% endif %}
+                </td>
                 <td>{{ ministry.date_documents_presented.strftime('%Y-%m-%d') }}</td>
                 <td>
                     <a href="{{ url_for('ministries.edit_ministry', id=ministry.id) }}" class="btn btn-warning btn-sm">Edit</a>

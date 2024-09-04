@@ -6,6 +6,9 @@ from Tana import DBStorage
 from werkzeug.utils import secure_filename
 import os
 import logging
+from io import BytesIO
+from flask import send_file
+from sqlalchemy.exc import SQLAlchemyError
 
 logging.basicConfig(level=logging.DEBUG,  # Adjust level as needed
                     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -102,3 +105,31 @@ def delete_ministry(id):
         flash('Ministry not found.', 'error')
     
     return redirect(url_for('ministries.list_ministries'))
+
+#route to download the document
+@ministry_bp.route('/download_ministry/<int:ministry_id>', methods=['GET'])
+def download_ministry(ministry_id):
+    """Route to download a ministry document"""
+    try:
+        ministry = db_storage.get(Ministries, id=ministry_id)
+        if not ministry:
+            flash(f'Ministry with ID {ministry_id} not found.', 'error')
+            return redirect(url_for('ministries.ministries_list'))
+
+        if not ministry.documents_presented:
+            flash('No document available for download.', 'error')
+            return redirect(url_for('ministries.ministries_list'))
+
+        return send_file(BytesIO(ministry.documents_presented),
+                         as_attachment=True,
+                         download_name=ministry.documents_filename)
+
+    except SQLAlchemyError as e:
+        logging.error(f"An SQLAlchemy error occurred: {e}")
+        flash(f'An error occurred while downloading the document: {e}', 'error')
+        return redirect(url_for('ministries.ministries_list'))
+
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+        flash(f'An error occurred while downloading the document: {e}', 'error')
+        return redirect(url_for('ministries.ministries_list'))
