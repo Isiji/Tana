@@ -17,6 +17,7 @@ from Tana.models.members import users
 from Tana.models.committees import Committee  
 from flask_wtf.csrf import CSRFProtect
 from datetime import datetime
+from Tana.models.ministries import Ministries
 
 db_storage = DBStorage()
 bcrypt = Bcrypt()
@@ -140,6 +141,7 @@ def create_app(config_class=Config):
         from Tana.legislation.routes import legislation_bp
         from Tana.oversight.routes import oversight_bp
         from Tana.representation.routes import representation
+        from Tana.ministries.routes import ministry_bp
 
         app.register_blueprint(Users)
         app.register_blueprint(events_bp)
@@ -157,5 +159,6 @@ def create_app(config_class=Config):
         app.register_blueprint(legislation_bp)
         app.register_blueprint(oversight_bp)
         app.register_blueprint(representation)
+        app.register_blueprint(ministry_bp)
         
     return app

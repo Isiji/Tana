@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Ministries List</h2>
+    <a href="{{ url_for('ministries.add_ministry') }}" class="btn btn-primary mb-3">Add New Ministry</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Contact Person</th>
+                <th>Mobile Number</th>
+                <th>Email</th>
+                <th>Documents Presented</th>
+                <th>Date Documents Presented</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ministry in ministries.values() %}
+            <tr>
+                <td>{{ ministry.name }}</td>
+                <td>{{ ministry.contact_person }}</td>
+                <td>{{ ministry.mobile_number }}</td>
+                <td>{{ ministry.email }}</td>
+                <td>{{ ministry.documents_presented }}</td>
+                <td>{{ ministry.date_documents_presented.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    <a href="{{ url_for('ministries.edit_ministry', id=ministry.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ url_for('ministries.delete_ministry', id=ministry.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

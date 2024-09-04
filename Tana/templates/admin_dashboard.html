@@ -25,7 +25,6 @@
         <a href="http://www.parliament.go.ke/the-senate" class="btn btn-primary mb-2">Senate Order Paper</a>
     </div>
 
-
     <div class="mb-4">
         <h2>The following are what you can access and do:</h2>
     </div>
@@ -73,7 +72,6 @@
             </div>
         </div>
 
-
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card">
                 <div class="card-body text-center">
@@ -115,6 +113,16 @@
                 <div class="card-body text-center">
                     <h5 class="card-title">View All Users</h5>
                     <a href="{{ url_for('Users.all_users') }}" class="btn btn-primary btn-block">View All Users</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Card for Adding Ministry -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Add a Ministry</h5>
+                    <a href="{{ url_for('ministries.add_ministry') }}" class="btn btn-primary btn-block">Add Ministry</a>
                 </div>
             </div>
         </div>
