@@ -21,49 +21,46 @@ db_storage = DBStorage()
 
 @ministry_bp.route('/add_ministry', methods=['GET', 'POST'])
 def add_ministry():
-    """ Route for adding a ministry """
-    print("add ministry route has been hit")
+    """Route for adding ministries"""
     form = MinistryForm()
     if form.validate_on_submit():
-        print("form has been validated")
-        ministry = None
         try:
-            documents = form.documents_presented.data
-            documents_filename = None
-            if documents:
-                documents_filename = secure_filename(documents.filename)
-                documents.save(os.path.join('uploads', documents_filename))  # Save file to the uploads folder
+            # Handle main document
+            document_data = None
+            document_filename = None
+            if form.documents_presented.data:
+                document_data = form.documents_presented.data.read()
+                document_filename = secure_filename(form.documents_presented.data.filename)
+                form.documents_presented.data.seek(0)  # Reset file pointer after reading
 
+            # Create and save ministry instance
             ministry = Ministries(
                 name=form.name.data,
                 contact_person=form.contact_person.data,
                 mobile_number=form.mobile_number.data,
                 email=form.email.data,
-                documents_presented=open(os.path.join('uploads', documents_filename), 'rb').read() if documents else None,
-                documents_filename=documents_filename,
+                documents_presented=document_data,
+                documents_filename=document_filename,
                 date_documents_presented=form.date_documents_presented.data
             )
 
-            logging.debug(f"Attempting to add ministry: {ministry}")
             db_storage.new(ministry)
             db_storage.save()
-            flash('Ministry added successfully!', 'success')
+            flash('Ministry has been added!', 'success')
+            logging.info(f"Ministry '{ministry.name}' added to the database.")
             return redirect(url_for('ministries.add_ministry'))
         except Exception as e:
             db_storage.rollback()
-            logging.error(f"Error adding ministry: {e}")
-            print(f"Error adding ministry: {e}")
-            flash('An error occurred while adding the ministry. Please try again.', 'danger')
-            if ministry:
-                logging.debug(f"Ministry data: {ministry}")
-            logging.debug(f"Form data: {form.data}")
+            flash(f'An error occurred while adding the ministry: {str(e)}', 'danger')
+            logging.error(f"Failed to add ministry '{form.name.data}'. Error: {str(e)}")
     else:
-        print("Form validation failed")
+        logging.debug("Form validation failed")
         for field, errors in form.errors.items():
             for error in errors:
-                print(f"Error in {field}: {error}")
+                logging.debug(f"Error in {field}: {error}")
 
-    return render_template('add_ministry.html', form=form)
+    return render_template('add_ministry.html', title='Add Ministry', form=form)
+
 @ministry_bp.route('/ministries')
 def list_ministries():
     ministries = db_storage.all(Ministries)

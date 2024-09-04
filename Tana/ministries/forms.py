@@ -1,11 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, DateField, FileField
-from wtforms.validators import DataRequired, Optional
+from wtforms import StringField, FileField, DateField, SubmitField
+from wtforms.validators import DataRequired
 
 class MinistryForm(FlaskForm):
-    name = StringField('Ministry Name', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired()])
     contact_person = StringField('Contact Person', validators=[DataRequired()])
     mobile_number = StringField('Mobile Number', validators=[DataRequired()])
-    email = StringField('Email', validators=[Optional()])
-    documents_presented = FileField('Upload Documents', validators=[Optional()])
-    date_documents_presented = DateField('Date Documents Presented', validators=[DataRequired()])
+    email = StringField('Email')
+    documents_presented = FileField('Documents Presented')
+    date_documents_presented = DateField('Date Documents Presented', format='%Y-%m-%d', validators=[DataRequired()])
+    submit = SubmitField('Add Ministry')
