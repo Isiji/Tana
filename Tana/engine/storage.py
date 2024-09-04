@@ -231,13 +231,6 @@ class DBStorage:
         except SQLAlchemyError as e:
             print("An Error Occurred:", e)
 
-    def get_polling_station_by_name(self, name):
-        """Returns a polling station object by name"""
-        try:
-            return self.__session.query(PollingStation).filter_by(name=name).first()
-        except SQLAlchemyError as e:
-            print("An Error Occurred:", e)
-
     def get_pollingstation_by_name(self, name):
         """Returns a polling station object by name"""
         try:

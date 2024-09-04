@@ -14,51 +14,46 @@ from Tana.models.pollingstation import PollingStation
 events_bp = Blueprint('events', __name__)
 
 # create a route to add events
-@events_bp.route('/add_event', methods=['GET', 'POST'], strict_slashes=False)
-@login_required
+@events_bp.route('/add_event', methods=['GET', 'POST'])
 def add_event():
-    """Route to add an event"""
     form = EventForm()
-    polling_stations = db_storage.all(PollingStation).values()
-    form.polling_station_name.choices = [(ps.name, ps.name) for ps in polling_stations]
-
+    print("populating polling station choices")
+    
+    # Populate polling station choices
+    polling_stations = db_storage.all(PollingStation)
+    form.polling_station_name.choices = [(station.id, station.name) for station in polling_stations.values()]
+    print("waiting to validate the form")
+    
     if form.validate_on_submit():
-        event_name = form.event_name.data
-        event_description = form.event_description.data
-        impact_level = form.impact_level.data
-        event_leader = form.event_leader.data
-        event_location = form.event_location.data
-        contact_person = form.contact_person.data
-        start_date = form.start_date.data
-        end_date = form.end_date.data
-        polling_station_name = form.polling_station_name.data
-        user_id = current_user.id
-
-        polling_station = db_storage.find_one(PollingStation, name=polling_station_name)
-
+        print("form is validated")
+        polling_station_id = form.polling_station_name.data
+        polling_station = db_storage.get(PollingStation, id=polling_station_id)
+        print(f"Polling Station: {polling_station}")  # Debugging
+        
         if not polling_station:
-            flash('Polling station not found!', 'danger')
-            return redirect(url_for('events.add_event'))
+            form.polling_station_name.errors.append('Selected polling station is invalid.')
+            return render_template('add_event.html', form=form)
 
         event = Events(
-            event_name=event_name, 
-            event_description=event_description, 
-            impact_level=impact_level, 
-            event_leader=event_leader, 
-            event_location=event_location, 
-            contact_person=contact_person,
-            start_date=start_date,
-            end_date=end_date,
-            polling_station_id=polling_station.id,
-            user_id=user_id
+            event_name=form.event_name.data,
+            impact_level=form.impact_level.data,
+            event_leader=form.event_leader.data,
+            event_location=form.event_location.data,
+            contact_person=form.contact_person.data,
+            event_description=form.event_description.data,
+            start_date=form.start_date.data,
+            end_date=form.end_date.data,
+            polling_station_id=polling_station_id,
+            user_id=current_user.id
         )
-
+        print("next is to save the event")
         db_storage.new(event)
         db_storage.save()
-        flash('Event has been created!', 'success')
-        return redirect(url_for('events.view_events'))
-
-    return render_template('add_event.html', title='Add Event', form=form, polling_stations=polling_stations)
+        print("event saved")
+        flash('Event added successfully', 'success')
+    # Debugging output for form errors
+    print("Form Errors:", form.errors)
+    return render_template('add_event.html', form=form)
 
 
 # create a route to view events
@@ -165,17 +160,28 @@ def get_all_polling_stations():
 def get_polling_station_info():
     """Route to get polling station information"""
     polling_station_name = request.args.get('polling_station')
+    print(f"Polling Station Name: {polling_station_name}")  # Debugging
 
     if not polling_station_name:
         return jsonify({'error': 'Polling station name is required'}), 400
 
     polling_station = db_storage.find_one(PollingStation, name=polling_station_name)
+    print(f"Polling Station Found: {polling_station}")  # Debugging
 
     if not polling_station:
         return jsonify({'error': 'Polling station not found'}), 404
 
     ward = db_storage.find_one(Ward, id=polling_station.ward_id)
+    print(f"Ward Found: {ward}")  # Debugging
+
+    if not ward:
+        return jsonify({'error': 'Ward not found'}), 404
+
     constituency = db_storage.find_one(Constituency, id=ward.constituency_id)
+    print(f"Constituency Found: {constituency}")  # Debugging
+
+    if not constituency:
+        return jsonify({'error': 'Constituency not found'}), 404
 
     return jsonify({
         'ward': ward.name,

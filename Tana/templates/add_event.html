@@ -9,57 +9,73 @@
         <div class="form-group">
             {{ form.event_name.label(class="form-label") }}
             {{ form.event_name(class="form-control") }}
+            {% if form.event_name.errors %}
+                <div class="text-danger">{{ form.event_name.errors[0] }}</div>
+            {% endif %}
         </div>
         
         <div class="form-group">
             {{ form.event_description.label(class="form-label") }}
             {{ form.event_description(class="form-control") }}
+            {% if form.event_description.errors %}
+                <div class="text-danger">{{ form.event_description.errors[0] }}</div>
+            {% endif %}
         </div>
         
         <div class="form-group">
             {{ form.impact_level.label(class="form-label") }}
             {{ form.impact_level(class="form-control") }}
+            {% if form.impact_level.errors %}
+                <div class="text-danger">{{ form.impact_level.errors[0] }}</div>
+            {% endif %}
         </div>
         
         <div class="form-group">
             {{ form.event_leader.label(class="form-label") }}
             {{ form.event_leader(class="form-control") }}
+            {% if form.event_leader.errors %}
+                <div class="text-danger">{{ form.event_leader.errors[0] }}</div>
+            {% endif %}
         </div>
         
         <div class="form-group">
             {{ form.event_location.label(class="form-label") }}
             {{ form.event_location(class="form-control") }}
+            {% if form.event_location.errors %}
+                <div class="text-danger">{{ form.event_location.errors[0] }}</div>
+            {% endif %}
         </div>
         
         <div class="form-group">
             {{ form.contact_person.label(class="form-label") }}
             {{ form.contact_person(class="form-control") }}
+            {% if form.contact_person.errors %}
+                <div class="text-danger">{{ form.contact_person.errors[0] }}</div>
+            {% endif %}
         </div>
         
         <div class="form-group">
             {{ form.start_date.label(class="form-label") }}
             {{ form.start_date(class="form-control") }}
+            {% if form.start_date.errors %}
+                <div class="text-danger">{{ form.start_date.errors[0] }}</div>
+            {% endif %}
         </div>
         
         <div class="form-group">
             {{ form.end_date.label(class="form-label") }}
             {{ form.end_date(class="form-control") }}
+            {% if form.end_date.errors %}
+                <div class="text-danger">{{ form.end_date.errors[0] }}</div>
+            {% endif %}
         </div>
         
         <div class="form-group">
-            <label for="pollingStationInput">Polling Station</label>
-            <input type="text" id="pollingStationInput" class="form-control" placeholder="Start typing to search..." oninput="fetchSuggestions()">
-            <div id="suggestions" class="list-group" style="position: absolute; z-index: 1000; width: 100%;"></div>
-        </div>
-        
-        <div class="form-group">
-            <label for="ward">Ward</label>
-            <input type="text" id="ward" class="form-control" name="ward_name" readonly>
-        </div>
-        
-        <div class="form-group">
-            <label for="constituency">Constituency</label>
-            <input type="text" id="constituency" class="form-control" name="constituency_name" readonly>
+            {{ form.polling_station_name.label(class="form-label") }}
+            {{ form.polling_station_name(class="form-control") }}
+            {% if form.polling_station_name.errors %}
+                <div class="text-danger">{{ form.polling_station_name.errors[0] }}</div>
+            {% endif %}
         </div>
 
         <button type="submit" class="btn btn-primary">Add Event</button>
@@ -102,8 +118,18 @@
     }
 
     function selectPollingStation(stationName) {
+        console.log('Selected polling station:', stationName); // Debugging output
+
+        // Set the value of the visible input field
         document.getElementById('pollingStationInput').value = stationName;
+        
+        // Set the value of the hidden field
+        document.getElementById('polling_station_name').value = stationName;
+
+        // Clear the suggestions
         document.getElementById('suggestions').innerHTML = '';
+        
+        // Fetch and display additional details for the selected polling station
         fetchPollingStationDetails(stationName);
     }
 
@@ -127,5 +153,4 @@
         }
     }
 </script>
-
 {% endblock %}
