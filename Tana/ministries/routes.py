@@ -98,14 +98,20 @@ def edit_ministry(id):
 
 @ministry_bp.route('/ministries/delete/<int:id>', methods=['POST'])
 def delete_ministry(id):
+    """Delete a ministry"""
     ministry = db_storage.get(Ministries, id=id)
-    if ministry:
+    if not ministry:
+        flash('Ministry not found.', 'danger')
+        return redirect(url_for('ministries.list_ministries'))
+    
+    try:
         db_storage.delete(ministry)
         db_storage.save()
         flash('Ministry deleted successfully!', 'success')
-    else:
-        flash('Ministry not found.', 'error')
-    
+    except Exception as e:
+        db_storage.rollback()
+        flash(f'Error deleting ministry: {e}', 'danger')
+
     return redirect(url_for('ministries.list_ministries'))
 
 #route to download the document
