@@ -10,7 +10,7 @@ class Ministries(BaseModel, Base):
     contact_person = Column(String(128), nullable=False)
     mobile_number = Column(String(20), nullable=False)
     email = Column(String(128), nullable=True)
-    documents_presented = Column(LargeBinary, nullable=True)  # Adjusted to handle binary data
+    documents_presented = Column(LargeBinary(length=4294967295), nullable=True)  # Adjusted to handle binary data
     documents_filename = Column(String(255), nullable=True)  # To store the filename
     date_documents_presented = Column(Date, nullable=False)
 

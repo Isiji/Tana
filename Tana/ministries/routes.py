@@ -48,10 +48,12 @@ def add_ministry():
             )
 
             db_storage.new(ministry)
+            print("ministry has been added")
+            print("now proceeding to save the ministry")
             db_storage.save()
             flash('Ministry has been added!', 'success')
             logging.info(f"Ministry '{ministry.name}' added to the database.")
-            return redirect(url_for('ministries.add_ministry'))
+            return redirect(url_for('ministries.list_ministries'))
         except Exception as e:
             db_storage.rollback()
             flash(f'An error occurred while adding the ministry: {str(e)}', 'danger')
