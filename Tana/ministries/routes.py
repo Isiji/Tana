@@ -94,7 +94,7 @@ def edit_ministry(id):
         flash('Ministry updated successfully!', 'success')
         return redirect(url_for('ministries.list_ministries'))
     
-    return render_template('edit_ministry.html', form=form)
+    return render_template('edit_ministry.html', form=form, ministry=ministry)
 
 @ministry_bp.route('/ministries/delete/<int:id>', methods=['POST'])
 def delete_ministry(id):
