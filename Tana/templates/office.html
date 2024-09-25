@@ -1,7 +1,6 @@
 {% extends 'layout.html' %}
-{% block title %} Office {% endblock %}
+{% block title %} Office Details {% endblock %}
 {% block content %}
-  <h2>Office</h2>
   <div class="container">
     <div class="row">
       <div class="col-md-6">
@@ -13,20 +12,7 @@
         <p>Ofice ID : {{ office.id }}</p>
       </div>
       <div class="col-md-6">
-        <h3>Office Members</h3>
-        <ul>
-          {% for member in office.members %}
-            <li>{{ member.name }}</li>
-          {% endfor %}
-        </ul>
       </div>
-      <div class="col-md-6">
-        <h3>Create Office</h3>
-        <a href="{{ url_for('offices.create_office', office_id=office.id) }}" class="btn btn-primary">Create Office</a>
-      </div>
-      <div class="col-md-6">
-      </div>
-      <!--to register a user-->
       
     </div>
   </div>
