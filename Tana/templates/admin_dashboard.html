@@ -33,6 +33,7 @@
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card">
                 <div class="card-body text-center">
+                    <p> here you can create an office and add members to the office</p>        
                     <h5 class="card-title">Create an Office</h5>
                     <a href="{{ url_for('offices.create_office') }}" class="btn btn-primary btn-block">Create Office</a>
                 </div>
@@ -57,51 +58,40 @@
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card">
                 <div class="card-body text-center">
-                    <h5 class="card-title">View Employee Records</h5>
-                    <a href="{{ url_for('Users.employee_records') }}" class="btn btn-primary btn-block">View Records</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
-                <div class="card-body text-center">
+                    <p> View events that have been created  </p>
                     <h5 class="card-title">View Calendar</h5>
                     <a href="{{ url_for('events.calendar') }}" class="btn btn-primary btn-block">View Calendar Events</a>
                 </div>
             </div>
         </div>
 
+
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card">
                 <div class="card-body text-center">
-                    <h5 class="card-title">View Polling Stations</h5>
+                    <p> View the status of employee, if absent or present </p>
+                    <h5 class="card-title">View Employee Register</h5>
+                    <a href="{{ url_for('Users.employee_records') }}" class="btn btn-primary btn-block">View Records</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p> View polling stations and there subsequent constiuencies and wards in a list form</p>  
+                    <h5 class="card-title">View Polling Stations List</h5>
                     <a href="{{ url_for('representation.pollingstations') }}" class="btn btn-primary btn-block">View Polling Stations</a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Create a Statement</h5>
-                    <a href="{{ url_for('legislation.add_statement') }}" class="btn btn-primary btn-block">Create Statement</a>
-                </div>
-            </div>
-        </div>
 
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card">
                 <div class="card-body text-center">
-                    <h5 class="card-title">View Statements</h5>
-                    <a href="{{ url_for('legislation.view_statements') }}" class="btn btn-primary btn-block">View Statements</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div class="card">
-                <div class="card-body text-center">
+                    <p> Search polling stations and there subsequent constiuencies and wards </p>  
                     <h5 class="card-title">Search for Polling Station</h5>
                     <a href="{{ url_for('representation.select_polling_station') }}" class="btn btn-primary btn-block">Search Polling Station</a>
                 </div>
@@ -111,21 +101,54 @@
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card">
                 <div class="card-body text-center">
+                    <p> View all the users that have been registered </p>
                     <h5 class="card-title">View All Users</h5>
                     <a href="{{ url_for('Users.all_users') }}" class="btn btn-primary btn-block">View All Users</a>
                 </div>
             </div>
         </div>
 
-        <!-- New Card for Adding Ministry -->
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card">
                 <div class="card-body text-center">
+                    <p> view documents that have been taken to various ministries and add other documents </p>
                     <h5 class="card-title">Ministries</h5>
                     <a href="{{ url_for('ministries.list_ministries') }}" class="btn btn-primary btn-block">View Ministry</a>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p> View and manage committees </p>  
+                    <h5 class="card-title">Committees</h5>
+                    <a href="{{ url_for('researchers.committees') }}" class="btn btn-primary btn-lg">Manage Committees</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p> view and add bills, motions, questions and statements that are related to your office </p>  
+                    <h5 class="card-title">Bills, Motions, Questions and Statements</h5>
+                    <a href="{{ url_for('legislation.functions') }}" class="btn btn-primary btn-lg">Functions</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p> here you can view the issues raised in the County office by the Coordinator  </p>  
+                    <h5 class="card-title">view County Office Updates</h5>
+                    <a href="{{ url_for('coordinators.view_county_office_updates') }}" class="btn btn-secondary">View County Office Updates</a>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
 {% endblock %}
