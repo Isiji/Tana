@@ -100,7 +100,7 @@ class users(BaseModel, Base, UserMixin):
             name="Danton",
             email="wandedanton@gmail.com",
             password=password_hash,
-            phone=1234,
+            phone='0727895448',
             ID_No=1234,
             role=UserRole.SUPER_ADMIN.value,
             office_id=None,

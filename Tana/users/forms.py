@@ -18,8 +18,8 @@ class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    phone = StringField('Phone', validators=[DataRequired()])
-    ID_No = StringField('ID Number', validators=[DataRequired()])
+    phone = StringField('Phone', validators=[DataRequired(), Length(min=10, max=10, message="Phone number must be 10 digits")], render_kw={"placeholder": "07xxxxxxxx"})
+    ID_No = IntegerField('ID Number', validators=[DataRequired()])
     
     role = SelectField('Role', choices=[
         (UserRole.ADMIN.value, 'Admin'),
