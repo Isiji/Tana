@@ -20,3 +20,7 @@ class BillsForm(FlaskForm):
     commencement_date = DateField('Commencement Date', validators=[Optional()])
     document = FileField('Document', validators=[Optional()])
     submit = SubmitField('Submit')
+
+class Emptyform(FlaskForm):
+    """Empty form"""
+    pass

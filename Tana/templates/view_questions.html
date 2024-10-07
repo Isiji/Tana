@@ -31,9 +31,6 @@
                         {% if question.follow_up_document %}
                             <a href="{{ url_for('legislation.download_question', question_id=question.id, document_type='follow_up_document') }}" class="btn btn-success">Download Follow-Up Document</a>
                         {% endif %}
-                        <form action="{{ url_for('legislation.delete_question', question_id=question.id) }}" method="post" style="display: inline;">
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this question?');">Delete</button>
-                        </form>
                     </td>
                 </tr>
             {% endfor %}

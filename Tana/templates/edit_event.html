@@ -63,6 +63,12 @@
 
         <button type="submit" class="btn btn-primary">Update Event</button>
     </form>
+
+    <form action="{{ url_for('bills.delete_bill', bill_id=bill.id) }}" method="POST" class="mt-3">
+        {{ form.hidden_tag() }}  <!-- CSRF token for the delete form -->
+        <button type="submit" class="btn btn-danger">Delete Bill</button>
+    </form>
+
 </div>
 
 <script>

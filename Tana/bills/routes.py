@@ -3,13 +3,14 @@
 from flask import render_template, flash, redirect, url_for, request, Blueprint
 from Tana import db_storage
 from Tana.models.bills import Bills
-from Tana.bills.forms import BillsForm
+from Tana.bills.forms import BillsForm, Emptyform
 import logging
 from io import BytesIO
 from flask import send_file
 from sqlalchemy.exc import SQLAlchemyError
 from werkzeug.utils import secure_filename
 import logging
+
 
 bills_bp = Blueprint('bills', __name__)
 
@@ -71,7 +72,8 @@ def view_bills():
     """ Route for viewing all bills """
     bills_dict = db_storage.all(Bills)
     bills = list(bills_dict.values())
-    return render_template('view_bills.html', bills=bills)
+    form = Emptyform()  # Empty form for CSRF token
+    return render_template('view_bills.html', bills=bills, form=form)
 
 # Route for editing a bill
 @bills_bp.route('/edit_bill/<int:bill_id>', methods=['GET', 'POST'], strict_slashes=False)
@@ -119,8 +121,12 @@ def edit_bill(bill_id):
 # Route for deleting a bill
 @bills_bp.route('/delete_bill/<int:bill_id>', methods=['POST'], strict_slashes=False)
 def delete_bill(bill_id):
-    """ delete a bill """
-    bill = db_storage.get(Bills, bill_id)
+    """ Delete a bill """
+    bill = db_storage.get(Bills, id=bill_id)
+    if not bill:
+        flash('Bill not found', 'danger')
+        return redirect(url_for('bills.view_bills'))
+    
     db_storage.delete(bill)
     db_storage.save()
     flash('Bill has been deleted!', 'success')
