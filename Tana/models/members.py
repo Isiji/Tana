@@ -90,11 +90,16 @@ class users(BaseModel, Base, UserMixin):
         db_storage.new(user)
         db_storage.save()
         return user
-
     @staticmethod
     def create_super_admin():
-        """creates a superadmin user"""
+        """creates a superadmin user if not already existing"""
         from Tana import db_storage, bcrypt
+        # Check if a super admin with this email already exists
+        existing_super_admin = db_storage.get_user_by_email(email="wandedanton@gmail.com")
+
+        if existing_super_admin:
+            return existing_super_admin
+
         password_hash = bcrypt.generate_password_hash("password").decode('utf-8')
         super_admin = users(
             name="Danton",
@@ -109,6 +114,8 @@ class users(BaseModel, Base, UserMixin):
         db_storage.new(super_admin)
         db_storage.save()
         return super_admin
+
+    
 
     def can_register_user(self, role):
         """checks if the current user can register a user"""

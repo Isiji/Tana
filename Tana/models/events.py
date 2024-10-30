@@ -1,12 +1,11 @@
-from sqlalchemy import Column, Integer, String, Text, Date, Enum, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from Tana.models.base_model import BaseModel, Base
-from Tana.models.impactlevel import ImpactLevel
 
 class Events(BaseModel, Base):
     __tablename__ = 'events'
     event_name = Column(String(128), nullable=False)
-    impact_level = Column(Enum(ImpactLevel), nullable=False)
+    impact_level = Column(String(10), nullable=False)
     event_leader = Column(String(128), nullable=False)
     event_location = Column(String(128), nullable=False)
     contact_person = Column(String(128), nullable=False)  # Changed to String
@@ -21,3 +20,5 @@ class Events(BaseModel, Base):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+IMPACT_LEVELS = ['High', 'Medium', 'Low']

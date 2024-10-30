@@ -21,6 +21,16 @@ COMMITTEES = [
     {'id': 6, 'name': 'CPIC'},
 ]
 
+
+# Define the routes
+@researchers.route('/researcher_dashboard', methods=['GET'])
+@login_required
+def researcher_dashboard():
+    """ Route to display the researcher dashboard """
+    return render_template('researcher.html', title='Researcher Dashboard')
+
+
+
 # Define the routes
 @researchers.route('/committees', methods=['GET'])
 @login_required

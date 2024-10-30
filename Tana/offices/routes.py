@@ -26,6 +26,7 @@ def create_office():
         )
         db_storage.new(office)
         db_storage.save()
+        print(f"created office id: {office.id}")
         flash('Your office has been created! You can now view office details.', 'success')
         return redirect(url_for('offices.office_details', office_id=office.id))
     return render_template('create_office.html', title='Create Office', form=form)
@@ -35,6 +36,7 @@ def create_office():
 @login_required
 def office_details(office_id):
     """Route to display office details."""
+    print(f"fetching office details for ID : {office_id}")
     office = db_storage.get_office_by_id(office_id)
     if office is None:
         flash('Office not found.', 'danger')

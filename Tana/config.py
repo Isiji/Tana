@@ -1,11 +1,15 @@
 #!/usr/bin/python3
 """config file for the app"""
 import os
+import json
+
+with open('/etc/config.json') as config_file:
+   config = json.load(config_file)
 
 class Config:
     """Config class for the app"""
-    SECRET_KEY = "Tana"  # Replace with your own secret key
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://Tana:Tana123.@localhost/Tana'
+    SECRET_KEY = config.get('SECRET_KEY')  # Replace with your own secret key
+    SQLALCHEMY_DATABASE_URI = config.get('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     CSV_FILE_PATH = os.path.join(os.getcwd(), 'Tana', 'representation', 'tanawards.csv')
 
@@ -13,8 +17,8 @@ class Config:
     MAIL_SERVER = 'smtp.gmail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = 'tanarivercountysenateoffice@gmail.com'  # Replace with your actual email
-    MAIL_PASSWORD = 'jksj ztze hjjv skyk'  # Replace with your actual email password
+    MAIL_USERNAME = ('MAIL_USERNAME')  # Replace with your actual email
+    MAIL_PASSWORD = ('MAIL_PASSWORD')  # Replace with your actual email password
     MAIL_DEFAULT_SENDER = 'noreply@demo.com'  # Replace with your default sender email
 
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'xls', 'xlsx', 'csv', 'pdf'}

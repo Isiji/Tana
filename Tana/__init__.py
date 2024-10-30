@@ -1,5 +1,6 @@
 import os
 import csv
+import pytz
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -63,7 +64,8 @@ def create_app(config_class=Config):
 
     @app.before_request
     def add_current_time():
-        request.current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        nairobi_tz = pytz.timezone('Africa/Nairobi')
+        request.current_time = datetime.now(nairobi_tz).strftime("%Y-%m-%d %H:%M:%S")
 
     @app.context_processor
     def inject_current_time():

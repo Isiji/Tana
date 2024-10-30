@@ -221,6 +221,8 @@ def login():
         email = form.email.data
         password = form.password.data
 
+        flash(f"attempting to log in with email: {email}")
+
         user = db_storage.get_user_by_email(email)
 
         if user is None or not bcrypt.check_password_hash(user.password, password):

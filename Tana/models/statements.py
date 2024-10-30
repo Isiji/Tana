@@ -1,7 +1,9 @@
 #!/usr/bin/env python3  
 """Statements class module for the statements, where the statements are stored"""
-from sqlalchemy import Column, String, Integer, Date, Enum, LargeBinary, Text
+from sqlalchemy import Column, String, Integer, Date, Enum as SaEnum, LargeBinary, Text
 from Tana.models.base_model import BaseModel, Base
+from Tana.models.status import StatusEnum
+
 class Statements(BaseModel, Base):
     """This class defines the statements model"""
     __tablename__ = 'statements'
@@ -9,7 +11,7 @@ class Statements(BaseModel, Base):
     document = Column(LargeBinary(length=4294967295), nullable=False)
     follow_up_letter = Column(LargeBinary(length=4294967295), nullable=True)  # New field for follow-up letters
     date = Column(Date, nullable=False)
-    status = Column(Enum("Pending", "Approved", "Rejected"), nullable=False)
+    status = Column(SaEnum(StatusEnum), nullable=False)
     filename = Column(String(255), nullable=False)
     
     def __init__(self, document, follow_up_letter, date, status, *args, **kwargs):

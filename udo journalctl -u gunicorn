@@ -1,0 +1,9 @@
+[0;1;31m×[0m gunicorn.service - gunicorn daemon
+     Loaded: loaded (]8;;file://tana-server/etc/systemd/system/gunicorn.service/etc/systemd/system/gunicorn.service]8;;; [0;1;32menabled[0m; preset: [0;1;32menabled[0m)
+     Active: [0;1;31mfailed[0m (Result: exit-code) since Tue 2024-10-22 14:01:29 EAT; 9s ago
+   Duration: 31ms
+ Invocation: 2e0a48ffff004bb5990c4bf52168e843
+    Process: 76988 ExecStart=/home/tana/venv/bin/gunicorn --access-logfile - --workers 3 --bind 127.0.0.1:8000 app:app [0;1;31m(code=exited, status=217/USER)[0m
+   Main PID: 76988 (code=exited, status=217/USER)
+   Mem peak: 1.5M
+        CPU: 9ms

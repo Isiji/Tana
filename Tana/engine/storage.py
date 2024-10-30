@@ -12,8 +12,6 @@ from Tana.models.reminder import Reminder
 from Tana.models.diary import Diary
 from Tana.models.calendarEvents import CalendarEvents
 from Tana.models.events import Events
-from Tana.models.impactlevel import ImpactLevel
-from Tana.models.eventcategory import EventCategory
 from Tana.models.pollingstation import PollingStation
 from Tana.models.ward import Ward
 from Tana.models.constituency import Constituency
@@ -28,6 +26,8 @@ from Tana.models.county_office_update import CountyOfficeUpdate
 from Tana.models.committee_records import CommitteeRecord
 from Tana.models.committees import Committee
 from Tana.models.ministries import Ministries
+from Tana.models.status import StatusEnum
+
 class DBStorage:
     """Database storage class"""
     __engine = None
@@ -38,7 +38,7 @@ class DBStorage:
         if app is not None:
             self.__engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], pool_pre_ping=True)
         else:
-            self.__engine = create_engine('mysql+mysqldb://Tana:Tana123.@localhost/Tana', pool_pre_ping=True)
+            self.__engine = create_engine('postgresql+psycopg2://tana_user:Tana123.@localhost/tana', pool_pre_ping=True)
         
         if 'test' in sys.argv:
             Base.metadata.drop_all(self.__engine)
@@ -55,7 +55,7 @@ class DBStorage:
                     key = "{}.{}".format(cls.__name__, obj.id)
                     objects[key] = obj
             else:
-                classes = [users, UserRole, Offices, Ministries, CommitteeRecord, Committee, CountyOfficeUpdate, Reminder, Diary, CalendarEvents, Events, ImpactLevel, EventCategory, PollingStation, Ward, Constituency, Bills, EmployeeRegister, Motions, Questions, SecondaryOversight, Statements]
+                classes = [users, UserRole, StatusEnum, Offices, Ministries, CommitteeRecord, Committee, CountyOfficeUpdate, Reminder, Diary, CalendarEvents, Events, PollingStation, Ward, Constituency, Bills, EmployeeRegister, Motions, Questions, SecondaryOversight, Statements]
                 for cls in classes:
                     query_result = self.__session.query(cls).all()
                     for obj in query_result:
