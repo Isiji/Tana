@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ 'Edit' if edit else 'Add' }} Oversight{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ 'Edit' if edit else 'Add' }} Oversight</h1>
+    
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control", placeholder="Upload OAG Report") }}
+            {% if form.name.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.name.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        
+        <div class="form-group">
+            {{ form.OAG_Report.label(class="form-label") }}
+            {{ form.OAG_Report(class="form-control", placeholder="Upload OAG Report") }}
+            {% if form.OAG_Report.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.OAG_Report.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.date_updated.label(class="form-label") }}
+            {{ form.date_updated(class="form-control", placeholder="Select date") }}
+            {% if form.date_updated.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.date_updated.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.Ground_report.label(class="form-label") }}
+            {{ form.Ground_report(class="form-control", placeholder="Upload Ground Report") }}
+            {% if form.Ground_report.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.Ground_report.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.status.label(class="form-label") }}
+            {{ form.status(class="form-control", placeholder="Select status") }}
+            {% if form.status.errors %}
+                <div class="invalid-feedback">
+                    {% for error in form.status.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+
+    
+</div>
+{% endblock %}

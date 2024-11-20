@@ -1,0 +1,127 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Bill</h2>
+    <form method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }} <!-- CSRF token added here -->
+
+        <div class="form-group">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+            {% for error in form.name.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.submitted_date.label(class="form-label") }}
+            {{ form.submitted_date(class="form-control") }}
+            {% for error in form.submitted_date.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.first_reading.label(class="form-label") }}
+            {{ form.first_reading(class="form-control") }}
+            {% for error in form.first_reading.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.first_reading_date.label(class="form-label") }}
+            {{ form.first_reading_date(class="form-control") }}
+            {% for error in form.first_reading_date.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.second_reading.label(class="form-label") }}
+            {{ form.second_reading(class="form-control") }}
+            {% for error in form.second_reading.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.second_reading_date.label(class="form-label") }}
+            {{ form.second_reading_date(class="form-control") }}
+            {% for error in form.second_reading_date.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.third_reading.label(class="form-label") }}
+            {{ form.third_reading(class="form-control") }}
+            {% for error in form.third_reading.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.third_reading_date.label(class="form-label") }}
+            {{ form.third_reading_date(class="form-control") }}
+            {% for error in form.third_reading_date.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.presidential_assent.label(class="form-label") }}
+            {{ form.presidential_assent(class="form-control") }}
+            {% for error in form.presidential_assent.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.presidential_assent_date.label(class="form-label") }}
+            {{ form.presidential_assent_date(class="form-control") }}
+            {% for error in form.presidential_assent_date.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.commencement.label(class="form-label") }}
+            {{ form.commencement(class="form-control") }}
+            {% for error in form.commencement.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.commencement_date.label(class="form-label") }}
+            {{ form.commencement_date(class="form-control") }}
+            {% for error in form.commencement_date.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.document.label(class="form-label") }}
+            {{ form.document(class="form-control") }}
+            {% if bill.filename %}
+                <p>Current document: <a href="{{ url_for('bills.download_bill', bill_id=bill.id) }}" target="_blank">{{ bill.filename }}</a></p>
+            {% else %}
+                <p>No document uploaded.</p>
+            {% endif %}
+            {% for error in form.document.errors %}
+                <span style="color: red;">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Bill</button>
+    </form>
+
+    <!-- Add the delete form -->
+    <form action="{{ url_for('bills.delete_bill', bill_id=bill.id) }}" method="POST" class="mt-3">
+        {{ form.hidden_tag() }}  <!-- CSRF token for the delete form -->
+        <button type="submit" class="btn btn-danger">Delete Bill</button>
+    </form>
+</div>
+{% endblock %}

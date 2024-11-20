@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+
+{% block title %}View Bills{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>View Bills</h2>
+    <a href="{{ url_for('bills.add_bill') }}" class="btn btn-primary btn-sm mb-3">Add New Bill</a>
+    
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Submitted Date</th>
+                <th>First Reading</th>
+                <th>First Reading Date</th>
+                <th>Second Reading</th>
+                <th>Second Reading Date</th>
+                <th>Third Reading</th>
+                <th>Third Reading Date</th>
+                <th>Presidential Assent</th>
+                <th>Presidential Assent Date</th>
+                <th>Commencement</th>
+                <th>Commencement Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.id }}</td>
+                <td>{{ bill.name }}</td>
+                <td>{{ bill.submitted_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ 'Yes' if bill.first_reading else 'No' }}</td>
+                <td>{{ bill.first_reading_date.strftime('%Y-%m-%d') if bill.first_reading_date else 'N/A' }}</td>
+                <td>{{ 'Yes' if bill.second_reading else 'No' }}</td>
+                <td>{{ bill.second_reading_date.strftime('%Y-%m-%d') if bill.second_reading_date else 'N/A' }}</td>
+                <td>{{ 'Yes' if bill.third_reading else 'No' }}</td>
+                <td>{{ bill.third_reading_date.strftime('%Y-%m-%d') if bill.third_reading_date else 'N/A' }}</td>
+                <td>{{ 'Yes' if bill.presidential_assent else 'No' }}</td>
+                <td>{{ bill.presidential_assent_date.strftime('%Y-%m-%d') if bill.presidential_assent_date else 'N/A' }}</td>
+                <td>{{ 'Yes' if bill.commencement else 'No' }}</td>
+                <td>{{ bill.commencement_date.strftime('%Y-%m-%d') if bill.commencement_date else 'N/A' }}</td>
+                <td>
+                    <a href="{{ url_for('bills.edit_bill', bill_id=bill.id) }}" class="btn btn-primary btn-sm">Edit</a>
+                    
+                    </form>
+                    
+                    <a href="{{ url_for('bills.download_bill', bill_id=bill.id) }}" class="btn btn-success btn-sm">Download</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ title }}</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+            {% for error in form.name.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.document.label(class="form-label") }}
+            {{ form.document(class="form-control-file") }}
+            {% if motion.filename %}
+                <p>Current document: <a href="{{ url_for('legislation.download_motion', motion_id=motion.id) }}" target="_blank">{{ motion.filename }}</a></p>
+            {% else %}
+                <p>No document uploaded.</p>
+            {% endif %}
+            {% for error in form.document.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.follow_up_document.label(class="form-label") }}
+            {{ form.follow_up_document(class="form-control-file") }}
+            {% if motion.follow_up_document %}
+                <p>Current follow-up document: <a href="{{ url_for('legislation.download_follow_up_document', motion_id=motion.id) }}" target="_blank">Download</a></p>
+            {% else %}
+                <p>No follow-up document uploaded.</p>
+            {% endif %}
+            {% for error in form.follow_up_document.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.date.label(class="form-label") }}
+            {{ form.date(class="form-control") }}
+            {% for error in form.date.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.status.label(class="form-label") }}
+            {{ form.status(class="form-control") }}
+            {% for error in form.status.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+        <!-- Add the delete form -->
+        <form action="{{ url_for('legislation.delete_motion', motion_id=motion.id) }}" method="POST" class="mt-3">
+            {{ form.hidden_tag() }}  <!-- CSRF token for the delete form -->
+            <button type="submit" class="btn btn-danger">Delete Motion</button>
+        </form>
+    
+</div>
+{% endblock %}

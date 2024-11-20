@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block title %} View Statements {% endblock %}
+{% block content %}
+    <h2>View Statements</h2>
+    <a href="{{ url_for('legislation.add_statement') }}" class="btn btn-primary mb-3">Add Statement</a>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Date Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for statement in statements %}
+                    <tr>
+                        <td>{{ statement.name }}</td>
+                        <td>{{ statement.date }}</td>
+                        <td>{{ statement.status }}</td>
+                        <td>{{ statement.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>
+                            <a href="{{ url_for('legislation.edit_statement', statement_id=statement.id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ url_for('legislation.download_statement', statement_id=statement.id) }}" class="btn btn-success">Download</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

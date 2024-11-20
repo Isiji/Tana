@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>View Folders</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+        <li class="flash {{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<ul>
+  {% for folder in folders %}
+    <li>
+      <strong>{{ folder.name }}</strong>
+      <a href="{{ url_for('report_bp.view_folder', folder_id=folder.id) }}">View</a>
+      <a href="{{ url_for('report_bp.create_folder', parent_id=folder.id) }}">Create Subfolder</a>
+      <form action="{{ url_for('report_bp.delete_folder', folder_id=folder.id) }}" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+      </form>
+    </li>
+  {% endfor %}
+</ul>
+
+<a href="{{ url_for('report_bp.create_folder') }}">Create Root Folder</a>
+{% endblock %}
+

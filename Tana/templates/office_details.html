@@ -1,0 +1,52 @@
+<!-- templates/office_details.html -->
+
+{% extends "layout.html" %}
+{% block content %}
+  <div class="container">
+    <h2>{{ office.office_name }}</h2>
+    <p><strong>Location:</strong> {{ office.office_location }}</p>
+    <p><strong>Description:</strong> {{ office.office_description }}</p>
+    <p><strong>Email:</strong> {{ office.email }}</p>
+    <p><strong>Manager:</strong> {{ office.office_manager }}</p>
+    
+    <h3>Members</h3>
+    <ul>
+      {% for member in members %}
+        <li>{{ member.name }} - {{ member.role }}</li>
+      {% endfor %}
+    </ul>
+    
+    <h3>Register New Member</h3>
+    <form method="POST" action="{{ url_for('offices.office_details', office_id=office.id) }}">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.name.label }} {{ form.name(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.email.label }} {{ form.email(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.password.label }} {{ form.password(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.confirm_password.label }} {{ form.confirm_password(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.phone.label }} {{ form.phone(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.ID_No.label }} {{ form.ID_No(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.role.label }} {{ form.role(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.office_id(class="form-control", value=office.id, readonly=true) }}
+      </div>
+      <div class="form-group">
+        {{ form.submit(class="btn btn-primary") }}
+      </div>
+
+    </form>
+  </div>
+{% endblock %}

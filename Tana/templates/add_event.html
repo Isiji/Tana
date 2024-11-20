@@ -1,0 +1,156 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Event</h2>
+    <form method="POST" action="{{ url_for('events.add_event') }}">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.event_name.label(class="form-label") }}
+            {{ form.event_name(class="form-control") }}
+            {% if form.event_name.errors %}
+                <div class="text-danger">{{ form.event_name.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.event_description.label(class="form-label") }}
+            {{ form.event_description(class="form-control") }}
+            {% if form.event_description.errors %}
+                <div class="text-danger">{{ form.event_description.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.impact_level.label(class="form-label") }}
+            {{ form.impact_level(class="form-control") }}
+            {% if form.impact_level.errors %}
+                <div class="text-danger">{{ form.impact_level.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.event_leader.label(class="form-label") }}
+            {{ form.event_leader(class="form-control") }}
+            {% if form.event_leader.errors %}
+                <div class="text-danger">{{ form.event_leader.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.event_location.label(class="form-label") }}
+            {{ form.event_location(class="form-control") }}
+            {% if form.event_location.errors %}
+                <div class="text-danger">{{ form.event_location.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.contact_person.label(class="form-label") }}
+            {{ form.contact_person(class="form-control") }}
+            {% if form.contact_person.errors %}
+                <div class="text-danger">{{ form.contact_person.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.start_date.label(class="form-label") }}
+            {{ form.start_date(class="form-control") }}
+            {% if form.start_date.errors %}
+                <div class="text-danger">{{ form.start_date.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.end_date.label(class="form-label") }}
+            {{ form.end_date(class="form-control") }}
+            {% if form.end_date.errors %}
+                <div class="text-danger">{{ form.end_date.errors[0] }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            {{ form.polling_station_name.label(class="form-label") }}
+            {{ form.polling_station_name(class="form-control") }}
+            {% if form.polling_station_name.errors %}
+                <div class="text-danger">{{ form.polling_station_name.errors[0] }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Event</button>
+    </form>
+</div>
+
+<script>
+    async function fetchSuggestions() {
+        const input = document.getElementById('pollingStationInput').value.trim();
+        const suggestionsDiv = document.getElementById('suggestions');
+
+        if (input.length === 0) {
+            suggestionsDiv.innerHTML = '';
+            return;
+        }
+
+        try {
+            const url = `{{ url_for('representation.get_polling_station_suggestions') }}?term=${encodeURIComponent(input)}`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.error) {
+                suggestionsDiv.innerHTML = '';
+                alert(data.error);
+            } else {
+                suggestionsDiv.innerHTML = '';
+                data.pollingStations.forEach(station => {
+                    const item = document.createElement('a');
+                    item.classList.add('list-group-item', 'list-group-item-action');
+                    item.href = '#';
+                    item.textContent = station;
+                    item.onclick = () => selectPollingStation(station);
+                    suggestionsDiv.appendChild(item);
+                });
+            }
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
+            alert('Error fetching suggestions. Please try again.');
+        }
+    }
+
+    function selectPollingStation(stationName) {
+        console.log('Selected polling station:', stationName); // Debugging output
+
+        // Set the value of the visible input field
+        document.getElementById('pollingStationInput').value = stationName;
+        
+        // Set the value of the hidden field
+        document.getElementById('polling_station_name').value = stationName;
+
+        // Clear the suggestions
+        document.getElementById('suggestions').innerHTML = '';
+        
+        // Fetch and display additional details for the selected polling station
+        fetchPollingStationDetails(stationName);
+    }
+
+    async function fetchPollingStationDetails(stationName) {
+        try {
+            const url = `{{ url_for('events.get_polling_station_info') }}?polling_station=${encodeURIComponent(stationName)}`;
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.error) {
+                document.getElementById('ward').value = '';
+                document.getElementById('constituency').value = '';
+                alert(data.error);
+            } else {
+                document.getElementById('ward').value = data.ward || '';
+                document.getElementById('constituency').value = data.constituency || '';
+            }
+        } catch (error) {
+            console.error('Error fetching details:', error);
+            alert('Error fetching details. Please try again.');
+        }
+    }
+</script>
+{% endblock %}

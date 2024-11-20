@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+{% block title %} Functions {% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Functions</h1>
+    <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="legislationDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Legislation
+        </button>
+        <div class="dropdown-menu" aria-labelledby="legislationDropdown">
+            <a class="dropdown-item" href="{{ url_for('bills.bills') }}">Bills</a>
+            <a class="dropdown-item" href="{{ url_for('legislation.motions') }}">Motions</a>
+            <a class="dropdown-item" href="{{ url_for('legislation.statements') }}">Statements</a>
+            <a class="dropdown-item" href="{{ url_for('legislation.questions') }}">Questions</a>
+        </div>
+    </div>
+    <p>Other functions content...</p>
+</div>
+{% endblock %}

@@ -1,0 +1,185 @@
+{% extends 'layout.html' %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1>Welcome to Tana River Senate Office</h1>
+        <h2>Admin Dashboard</h2>
+    </div>
+
+    <div class="mb-4">
+        <p>Our mission is to serve the people of Tana River County by providing the best services possible.</p>
+        <p>Our vision is to be the best Senate Office in Kenya.</p>
+    </div>
+
+    <div class="mb-4">
+        <h4>Your contact information is:</h4>
+        <ul>
+            <li>Email: {{ current_user.email }}</li>
+            <li>Phone: {{ current_user.phone }}</li>
+        </ul>
+    </div>
+
+    <div class="mt-4">
+        <p>To access the Parliament website and fetch order papers, bills, motions, and Hansard, click the button below:</p>
+        <a href="http://www.parliament.go.ke/the-senate" class="btn btn-primary mb-2">Senate Order Paper</a>
+    </div>
+
+    <div class="mb-4">
+        <h2>The following are what you can access and do:</h2>
+    </div>
+
+    <div class="row mb-4">
+        <!-- Create Office Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>Here you can create an office and add members to the office.</p>
+                    <h5 class="card-title">Create an Office</h5>
+                    <a href="{{ url_for('offices.create_office') }}" class="btn btn-primary btn-block">Create Office</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Office Details and Delete Office Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">View Office Details</h5>
+                    <p>Manage your offices here and select the delete button to delete an office that you want.</p>
+                    <div class="list-group">
+                        {% for office in offices %}
+                            <a href="{{ url_for('offices.office_details', office_id=office.id) }}" class="list-group-item list-group-item-action">
+                                {{ office.office_name }}
+                            </a>
+
+                            <!-- Delete Office Form -->
+                            <form action="{{ url_for('offices.delete_office', office_id=office.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this office and all associated users?');" class="mt-2">
+                                {{ form.hidden_tag() }}  <!-- CSRF token -->
+                                <button type="submit" class="btn btn-danger btn-block">Delete Office</button>
+                            </form>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Calendar Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>View events that have been created.</p>
+                    <h5 class="card-title">View Calendar</h5>
+                    <a href="{{ url_for('events.calendar') }}" class="btn btn-primary btn-block">View Calendar Events</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional dashboard options follow in similar card format -->
+        <!-- View Employee Register Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>View the status of employee attendance (absent or present).</p>
+                    <h5 class="card-title">View Employee Register</h5>
+                    <a href="{{ url_for('Users.employee_records') }}" class="btn btn-primary btn-block">View Records</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Polling Stations Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>View polling stations and their respective constituencies and wards in a list form.</p>
+                    <h5 class="card-title">View Polling Stations List</h5>
+                    <a href="{{ url_for('representation.pollingstations') }}" class="btn btn-primary btn-block">View Polling Stations</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Polling Stations Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>Search polling stations and their respective constituencies and wards.</p>
+                    <h5 class="card-title">Search for Polling Station</h5>
+                    <a href="{{ url_for('representation.select_polling_station') }}" class="btn btn-primary btn-block">Search Polling Station</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- View All Users Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>View all the users that have been registered.</p>
+                    <h5 class="card-title">View All Users</h5>
+                    <a href="{{ url_for('Users.all_users') }}" class="btn btn-primary btn-block">View All Users</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ministries Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>View documents that have been taken to various ministries and add other documents.</p>
+                    <h5 class="card-title">Ministries</h5>
+                    <a href="{{ url_for('ministries.list_ministries') }}" class="btn btn-primary btn-block">View Ministry</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Committees Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>View and manage committees.</p>
+                    <h5 class="card-title">Committees</h5>
+                    <a href="{{ url_for('researchers.committees') }}" class="btn btn-primary btn-lg">Manage Committees</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bills, Motions, Questions, and Statements Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>View and add bills, motions, questions, and statements related to your office.</p>
+                    <h5 class="card-title">Bills, Motions, Questions and Statements</h5>
+                    <a href="{{ url_for('legislation.functions') }}" class="btn btn-primary btn-lg">Functions</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- County Office Updates Card -->
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>Here you can view the issues raised in the County office by the Coordinator.</p>
+                    <h5 class="card-title">View County Office Updates</h5>
+                    <a href="{{ url_for('coordinators.view_county_office_updates') }}" class="btn btn-secondary">View County Office Updates</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <p>Manage and view the County Reports.</p>
+                    <h5 class="card-title">County Reports</h5>
+                    <a href="{{ url_for('report_bp.view_folders') }}" class="btn btn-primary btn-block">View County Reports</a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
+{% endblock %}
+

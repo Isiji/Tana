@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block title %}{{ 'Edit' if edit else 'Add' }} Oversight{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>{{ 'Edit' if edit else 'Add' }} Oversight</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.OAG_Report.label(class="form-label") }}
+            {{ form.OAG_Report(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.date_updated.label(class="form-label") }}
+            {{ form.date_updated(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.Ground_report.label(class="form-label") }}
+            {{ form.Ground_report(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.status.label(class="form-label") }}
+            {{ form.status(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

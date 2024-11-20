@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block title %}Delete Office{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Admin Dashboard</h1>
+    <h3 class="mb-4">List of Offices</h3>
+
+    {% if offices %}
+        <div class="row">
+            {% for office in offices %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ office.office_name }}</h5>
+                            <p>{{ office.description }}</p>
+
+                            <!-- Delete Office Form -->
+                            <form action="{{ url_for('offices.delete_office', office_id=office.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this office and all associated users?');">
+                                {{ csrf_token() }}  <!-- CSRF token for security -->
+                                <button type="submit" class="btn btn-danger">Delete Office</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No offices available.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

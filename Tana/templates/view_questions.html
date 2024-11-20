@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% block title %}View Questions{% endblock %}
+{% block content %}
+<h2>View Questions</h2>
+<a href="{{ url_for('legislation.add_question') }}" class="btn btn-primary">Add Question</a>
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Date Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for question in questions %}
+                <tr>
+                    <td>{{ question.name }}</td>
+                    <td>{{ question.date }}</td>
+                    <td>{{ question.status }}</td>
+                    <td>{{ question.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>
+                        <a href="{{ url_for('legislation.edit_question', question_id=question.id) }}" class="btn btn-warning">Edit</a>
+                        {% if question.document %}
+                            <a href="{{ url_for('legislation.download_question', question_id=question.id, document_type='document') }}" class="btn btn-success">Download Document</a>
+                        {% else %}
+                            No Document
+                        {% endif %}
+                        {% if question.follow_up_document %}
+                            <a href="{{ url_for('legislation.download_question', question_id=question.id, document_type='follow_up_document') }}" class="btn btn-success">Download Follow-Up Document</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

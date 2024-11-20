@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+{% block title %} Coordinator Dashboard {% endblock %}
+{% block content %}
+
+<div class="container">
+
+    <h1>Welcome to Tana River Senate Office</h1>
+    <p>Our mission is to serve the people of Tana River County by providing the best services possible.</p>
+    <p>Our vision is to be the best Senate Office in Kenya.</p>
+    <p>The following are what you can access and do:</p>
+    <!-- Use buttons or links to access various functionalities -->
+    <a href="{{ url_for('coordinators.add_county_office_update') }}" class="btn btn-primary">Add County Office Update</a>
+    <a href="{{ url_for('coordinators.view_county_office_updates') }}" class="btn btn-secondary">View County Office Updates</a>
+    
+    <h2>My Profile</h2>
+
+    <p>Name: {{ current_user.name }}</p>
+    <p>Role: {{ current_user.role }}</p>
+    <p>Email: {{ current_user.email }}</p>
+    <p>My phone number is: {{ current_user.phone_number }}</p>
+
+</div>
+    
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'layout.html' %}
+{% block title %}Reminders{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>Reminders</h1>
+
+    <!-- Reminder Form Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h1>Set Reminder</h1>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('reminders.add_reminder') }}">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    {{ form.reminder_name.label }} {{ form.reminder_name(class="form-control") }}
+                    {% for error in form.reminder_name.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.reminder_date.label }} {{ form.reminder_date(class="form-control") }}
+                    {% for error in form.reminder_date.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.reminder_time.label }} {{ form.reminder_time(class="form-control") }}
+                    {% for error in form.reminder_time.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div class="form-group">
+                    {{ form.reminder_description.label }} {{ form.reminder_description(class="form-control") }}
+                    {% for error in form.reminder_description.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary">Set Reminder</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- List of Reminders -->
+    <div class="card">
+        <div class="card-header">
+            Your Reminders
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Reminder Name</th>
+                        <th>Reminder Date</th>
+                        <th>Reminder Time</th>
+                        <th>Reminder Description</th>
+                        <th>Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for reminder in reminders %}
+                    <tr>
+                        <td>{{ reminder.reminder_name }}</td>
+                        <td>{{ reminder.reminder_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ reminder.reminder_time.strftime('%H:%M:%S') }}</td>
+                        <td>{{ reminder.reminder_description }}</td>
+                        <td>{{ current_user.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

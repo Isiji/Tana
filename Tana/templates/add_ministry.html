@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Ministry</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.name.label(class="form-control-label") }}
+            {{ form.name(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group">
+            {{ form.contact_person.label(class="form-control-label") }}
+            {{ form.contact_person(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group">
+            {{ form.mobile_number.label(class="form-control-label") }}
+            {{ form.mobile_number(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label(class="form-control-label") }}
+            {{ form.email(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group">
+            {{ form.documents_presented.label(class="form-control-label") }}
+            {{ form.documents_presented(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group">
+            {{ form.date_documents_presented.label(class="form-control-label") }}
+            {{ form.date_documents_presented(class="form-control form-control-lg") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+    
+</div>
+{% endblock %}

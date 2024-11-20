@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block title %}View Oversight{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>View Oversight</h2>
+    <a href="{{ url_for('oversight_bp.add_oversight') }}" class="btn btn-primary btn-sm">Add New Oversight</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Document</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for oversight in oversights %}
+            <tr>
+                <td>{{ oversight.id }}</td>
+                <td>{{ oversight.name }}</td>
+                <td>{{ oversight.description }}</td>
+                <td>{{ oversight.date_updated.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    {% if oversight.document %}
+                        <a href="{{ url_for('oversight_bp.download_oversight', oversight_id=oversight.id) }}" target="_blank">{{ oversight.document_filename }}</a>
+                    {% else %}
+                        No document
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('oversight_bp.edit_oversight', oversight_id=oversight.id) }}" class="btn btn-primary btn-sm">Edit</a>
+                    <form action="{{ url_for('oversight_bp.delete_oversight', oversight_id=oversight.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                    <a href="{{ url_for('oversight_bp.download_oversight', oversight_id=oversight.id) }}" class="btn btn-success btn-sm">Download</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

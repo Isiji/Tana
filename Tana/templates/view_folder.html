@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Folder: {{ folder.name }}</h1>
+<h2>Subfolders</h2>
+<ul>
+    {% for subfolder in subfolders %}
+        <li>
+            <a href="{{ url_for('report_bp.view_folder', folder_id=subfolder.id) }}">{{ subfolder.name }}</a>
+            <form method="POST" action="{{ url_for('report_bp.delete_folder', folder_id=subfolder.id) }}">
+                <button type="submit" class="btn btn-danger btn-sm">Delete Folder</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+<h2>Reports</h2>
+<ul>
+    {% for report in reports %}
+        <li>
+            {{ report.name }}
+            <form method="POST" action="{{ url_for('report_bp.delete_report', report_id=report.id) }}">
+                <button type="submit" class="btn btn-danger btn-sm">Delete Report</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('report_bp.create_folder', parent_id=folder.id) }}" class="btn btn-primary">Create Subfolder</a>
+<a href="{{ url_for('report_bp.add_report', folder_id=folder.id) }}" class="btn btn-primary">Add Report</a>
+{% endblock %}
+

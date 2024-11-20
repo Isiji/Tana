@@ -1,0 +1,63 @@
+{% extends 'layout.html' %}
+{% block title %} Edit Statement {% endblock %}
+{% block content %}
+    <h2>Edit Statement</h2>
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.name.label(for="name") }}
+                {{ form.name(class="form-control", id="name") }}
+                {% for error in form.name.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.document.label(for="document") }}
+                {{ form.document(class="form-control-file", id="document") }}
+                {% if statement.filename %}
+                    <p>Current document: <a href="{{ url_for('legislation.download_statement', statement_id=statement.id) }}" target="_blank">{{ statement.filename }}</a></p>
+                {% else %}
+                    <p>No document uploaded.</p>
+                {% endif %}
+                {% for error in form.document.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.follow_up_letter.label(for="follow_up_letter") }}
+                {{ form.follow_up_letter(class="form-control-file", id="follow_up_letter") }}
+                {% if statement.follow_up_letter %}
+                    <p>Current follow-up letter: <a href="{{ url_for('legislation.download_follow_up_letter', statement_id=statement.id) }}" target="_blank">Download</a></p>
+                {% else %}
+                    <p>No follow-up letter uploaded.</p>
+                {% endif %}
+                {% for error in form.follow_up_letter.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.date.label(for="date") }}
+                {{ form.date(class="form-control", id="date", type="date") }}
+                {% for error in form.date.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.status.label(for="status") }}
+                {{ form.status(class="form-control", id="status") }}
+                {% for error in form.status.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+
+            <!-- Add the delete form -->
+    <form action="{{ url_for('legislation.delete_statement', statement_id=statement.id) }}" method="POST" class="mt-3">
+        {{ form.hidden_tag() }}  <!-- CSRF token for the delete form -->
+        <button type="submit" class="btn btn-danger">Delete Statement</button>
+    </form>
+
+    </div>
+{% endblock %}

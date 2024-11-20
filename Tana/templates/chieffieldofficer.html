@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+{% block title %}Chief Field Officer Dashboard{% endblock %}
+{% block content %}
+
+<div class="container">
+    <h1>Welcome to Tana River Senate Office</h1>
+    <p>Our mission is to serve the people of Tana River County by providing the best services possible.</p>
+    <p>Our vision is to be the best Senate Office in Kenya.</p>
+    <p>The following are what you can access and do:</p>
+    <ul>
+        <li>Events</li>
+        <li>Details of field_officers </li>
+        <li>Reminders</li>
+    </ul>
+
+    <div class="mt-4">
+        <h3>Chief Field Officer Details</h3>
+        <p>Name: {{ current_user.name }}</p>
+        <p>Email: <a href="mailto:{{ current_user.email }}">{{ current_user.email }}</a></p>
+        <p>Phone: {{ current_user.phone }}</p>
+    </div>
+
+    <!--add link for adding evens -->
+    <div class="mt-4">
+        <h3>Events</h3>
+        <p>Add and View all events here</p>
+        <a href="{{ url_for('events.view_events') }}" class="btn btn-primary">Add and View Event</a>
+    </div>
+
+    <div class="mt-4">
+        <h3>All Field Officers</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for field_officer in field_officers %}
+                    <tr>
+                        <td>{{ field_officer.name }}</td>
+                        <td><a href="mailto:{{ field_officer.email }}">{{ field_officer.email }}</a></td>
+                        <td>{{ field_officer.phone }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <h3>Search Field Officer by Name</h3>
+        <form action="{{ url_for('chieffieldofficers.field_officer', name='') }}" method="GET" class="form-inline">
+            <div class="form-group mr-2">
+                <label for="search_name" class="sr-only">Search by Name:</label>
+                <input type="text" class="form-control" id="search_name" name="name" placeholder="Enter name">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Events</h5>
+                    <p class="card-text">Manage and view all events.</p>
+                    <a href="{{ url_for('events.view_events') }}" class="btn btn-secondary btn-block">View Events</a>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+</div>
+
+{% endblock %}

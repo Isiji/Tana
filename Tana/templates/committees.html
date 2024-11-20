@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+{% block title %}Committees{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <h1>Committees</h1>
+    <div class="list-group">
+        {% for committee in committees %}
+            <a href="{{ url_for('researchers.committee', committee_id=committee.id) }}" class="list-group-item list-group-item-action">
+                {{ committee.name }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

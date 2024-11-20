@@ -1,0 +1,23 @@
+{%extends 'layout.html'%}
+{%block title%}Representation{%endblock%}
+{%block content%}
+<div class="container">
+    <h1>Representation</h1>
+    <h2>Constituencies</h2>
+    <ul>
+        {% for constituency in constituencies %}
+            <li>{{ constituency.name }}</li>
+            <ul>
+                {% for ward in constituency.wards %}
+                    <li>{{ ward.name }}</li>
+                    <ul>
+                        {% for polling_station in ward.polling_stations %}
+                            <li>{{ polling_station.name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+</div>
+{%endblock%}    

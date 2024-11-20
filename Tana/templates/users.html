@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">{{ title }}</h1>
+    {% if users %}
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>ID No</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                        <td><a href="tel:{{ user.phone }}">{{ user.phone }}</a></td>
+                        <td>{{ user.ID_No }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>
+                            <!-- For each user, create a delete form -->
+                            <form action="{{ url_for('Users.delete_user', user_id=user.id) }}" method="POST">
+                                {{ form.hidden_tag() }}  <!-- CSRF token -->
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No users found.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Create Folder</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul class="flashes">
+      {% for category, message in messages %}
+        <li class="flash {{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<!-- Ensure the CSRF token is included in the form -->
+<form method="POST" action="{{ url_for('report_bp.create_folder', parent_id=parent_id) }}">
+  {{ form.hidden_tag() }}
+  
+  <label for="folder_name">Folder Name:</label>
+  <input type="text" id="folder_name" name="folder_name" value="{{ form.folder_name.data }}">
+  <br>
+  <button type="submit">Create Folder</button>
+</form>
+
+<a href="{{ url_for('report_bp.view_folders') }}">Back to Folders</a>
+{% endblock %}
+

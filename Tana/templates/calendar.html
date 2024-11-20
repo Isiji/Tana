@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% block title %}Calendar{% endblock %}
+{% block content %}
+<div class="container">
+    <div id="calendar"></div>
+    <div id="tooltip" style="position: absolute; z-index: 1000; padding: 10px; background: white; border: 1px solid black; display: none;"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var tooltip = document.getElementById('tooltip');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: '/events_data',  // Endpoint to fetch events data
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        eventMouseEnter: function(info) {
+            var event = info.event;
+            var content = `
+                <strong>${event.title}</strong><br>
+                <strong>Location:</strong> ${event.extendedProps.location}<br>
+                <strong>Description:</strong> ${event.extendedProps.description}<br>
+                <strong>Start:</strong> ${event.start.toLocaleString()}<br>
+                <strong>End:</strong> ${event.end ? event.end.toLocaleString() : 'N/A'}
+            `;
+            tooltip.innerHTML = content;
+            tooltip.style.display = 'block';
+            tooltip.style.top = (info.jsEvent.clientY + 10) + 'px';
+            tooltip.style.left = (info.jsEvent.clientX + 10) + 'px';
+        },
+        eventMouseLeave: function(info) {
+            tooltip.style.display = 'none';
+        }
+    });
+
+    calendar.render();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h1>{{ title }}</h1>
+    <a href="{{ url_for('legislation.add_motion') }}" class="btn btn-primary">Add New Motion</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Date Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for motion in motions %}
+            <tr>
+                <td>{{ motion.name }}</td>
+                <td>{{ motion.date }}</td>
+                <td>{{ motion.status }}</td>
+                <td>{{ motion.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>
+                    <a href="{{ url_for('legislation.edit_motion', motion_id=motion.id) }}" class="btn btn-warning">Edit</a>
+                    <a href="{{ url_for('legislation.download_motion', motion_id=motion.id) }}" class="btn btn-success">Download</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
